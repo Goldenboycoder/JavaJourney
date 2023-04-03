@@ -555,7 +555,7 @@ Such patterns can include nested patterns, where the components of records are t
 </details>
 
 
-
+![Green team](../Media/GreenTeam.jpg)
 
 ## More references
 
