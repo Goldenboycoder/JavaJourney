@@ -87,7 +87,7 @@ A .class file does not contain code that is native to your processor; it instead
 The java launcher tool then runs your application with an instance of the Java Virtual Machine.
 
 ```mermaid
-graph TD;
+flowchart LR;
     .java-->Compiler;
     Compiler-->.class;
     .class-->JVM;
@@ -97,7 +97,7 @@ graph TD;
 Because the Java VM is available on many different operating systems, the same .class files are capable of running on Microsoft Windows, Linux, or Mac OS. Some versions of the JVM include various tasks such as finding performance bottlenecks and recompiling (to native code) frequently used sections of code.
 
 ```mermaid
-graph TD;
+flowchart LR;
     Java Program --> Compiler;
     Compiler --> JVM;
     JVM --> Windows;
