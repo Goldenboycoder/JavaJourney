@@ -88,21 +88,23 @@ The java launcher tool then runs your application with an instance of the Java V
 
 ```mermaid
 flowchart LR;
-    .java-->Compiler;
-    Compiler-->.class;
-    .class-->JVM;
-    JVM-->Binary Code;
+    id1(.java)-->id2(Compiler);
+    id2(Compiler)-->id3(.class);
+    id3(.class)-->id4(JVM);
+    id4(JVM)-->id5(Binary Code);
 ```
 
 Because the Java VM is available on many different operating systems, the same .class files are capable of running on Microsoft Windows, Linux, or Mac OS. Some versions of the JVM include various tasks such as finding performance bottlenecks and recompiling (to native code) frequently used sections of code.
 
 ```mermaid
-flowchart LR;
-    Java Program --> Compiler;
-    Compiler --> JVM;
-    JVM --> Windows;
-    JVM --> UNIX;
-    JVN --> MacOS;
+flowchart TD;
+    id1(Java Program) --> id2(Compiler);
+    id2(Compiler) --> id3(JVM);
+    id2(Compiler) --> id4(JVM);
+    id2(Compiler) --> id5(JVM);
+    id3(JVM) --> Windows;
+    id4(JVM) --> UNIX;
+    id5(JVM) --> MacOS;
 ```
 
 ## Build
