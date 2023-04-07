@@ -142,39 +142,59 @@ In general, there are three class loaders :
 - System/Application class loader: It is a child of the extension class loader. It is responsible to load classes from the application classpath. It internally uses Environment Variable which mapped to java.class.path. It is also implemented in Java by the sun.misc.Launcher$AppClassLoader class.
 
 
+**Note**: JVM follows the Delegation-Hierarchy principle to load classes. System class loader delegate load request to extension class loader and extension class loader delegate request to the bootstrap class loader. 
+
+If a class found in the boot-strap path, the class is loaded otherwise request again transfers to the extension class loader and then to the system class loader. 
+
+At last, if the system class loader fails to load class, then we get run-time exception java.lang.ClassNotFoundException. 
+
+
 ### Class(Method) Area
 
 Class(Method) Area stores per-class structures such as the runtime constant pool, field and method data, the code for methods.
 
+In the method area, all class level information like class name, immediate parent class name, methods and variables information etc. are stored, including static variables. There is only one method area per JVM, and it is a shared resource. From java 8, static variables are now stored in Heap area.
+
 ### Heap
 It is the runtime data area in which objects are allocated.
-
+There is also one Heap Area per JVM. It is also a shared resource.
 
 ### Stack
 
+Each thread has a private JVM stack, created at the same time as thread.
+Every block of this stack is called activation record/stack frame which stores methods calls.
+
 Java Stack stores frames. It holds local variables and partial results, and plays a part in method invocation and return.
 
-Each thread has a private JVM stack, created at the same time as thread.
-
-A new frame is created each time a method is invoked. A frame is destroyed when its method invocation completes.
+A new frame is created each time a method is invoked. A frame is destroyed when its method invocation completes. After a thread terminates, its run-time stack will be destroyed by JVM. **It is not a shared resource**.
 
 
 ### Program Counter Register
 
-PC (program counter) register contains the address of the Java virtual machine instruction currently being executed.
+PC (program counter) register contains the address of the Java virtual machine  thread instruction currently being executed.
+
+Obviously, each thread has separate PC Registers.
 
 
 ### Native Method Stack
 
-It contains all the native methods used in the application.
+Native methods are those which are written in languages other than java.
+
+For every thread, a separate native stack is created. It stores native method information
+
+Native methods are inherently implementation dependent. Implementation designers are free to decide what mechanisms they will use to enable a Java application running on their implementation to invoke native methods.
+
+Any native method interface will use some kind of native method stack. When a thread invokes a Java method, the virtual machine creates a new frame and pushes it onto the Java stack. When a thread invokes a native method, however, that thread leaves the Java stack behind. Instead of pushing a new frame onto the thread's Java stack, the Java virtual machine will simply dynamically link to and directly invoke the native method. One way to think of it is that the Java virtual machine is dynamically extending itself with native code. It is as if the Java virtual machine implementation is just calling another (dynamically linked) method within itself, at the behest of the running Java program.
+
+
 
 ### Execution Engine
 
 It contains:
 
-1. A virtual processor
-2. Interpreter: Read bytecode stream then execute the instructions.
-3. Just-In-Time(JIT) compiler: It is used to improve the performance. JIT compiles parts of the byte code that have similar functionality at the same time, and hence reduces the amount of time needed for compilation. Here, the term "compiler" refers to a translator from the instruction set of a Java virtual machine (JVM) to the instruction set of a specific CPU.
+1. Garbage Collector: It destroys un-referenced objects.
+2. Interpreter: Read the “.class” bytecode stream then execute the instructions.
+3. Just-In-Time(JIT) compiler: It is used to improve the performance. Here, the term "compiler" refers to a translator from the instruction set of a Java virtual machine (JVM) to the instruction set of a specific CPU. It compiles the entire bytecode and changes it to native code so whenever the interpreter sees repeated method calls, JIT provides direct native code for that part so re-interpretation is not required, thus efficiency is improved.
 
 
 ### Java Native Interface
@@ -188,3 +208,8 @@ Java Native Interface (JNI) is a framework which provides an interface to commun
 https://www.javatpoint.com/jvm-java-virtual-machine
 
 https://www.geeksforgeeks.org/jvm-works-jvm-architecture/?ref=lbp
+
+https://www.artima.com/insidejvm/ed2/jvm9.html
+
+https://www.hackerearth.com/practice/notes/runtime-data-areas-of-java/
+
