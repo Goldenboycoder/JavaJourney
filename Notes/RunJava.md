@@ -112,7 +112,7 @@ There are three built-in classloaders in Java.
 
 2. Extension ClassLoader: This is the child classloader of Bootstrap and parent classloader of System classloader. It loades the jar files located inside $JAVA_HOME/jre/lib/ext directory.
 
-3. System/Application ClassLoader: This is the child classloader of Extension classloader. It loads the classfiles from classpath. By default, classpath is set to current directory. You can change the classpath using "-cp" or "-classpath" switch. It is also known as Application classloader.
+3. System/Application ClassLoader: This is the child classloader of Extension classloader. It loads the classfiles **from classpath**. By default, classpath is set to current directory. You can change the classpath using "-cp" or "-classpath" switch. It is also known as Application classloader.
 
 **N.B**: These are the internal classloaders provided by Java. If you want to create your own classloader, you need to extend the ClassLoader class.
 
@@ -202,6 +202,14 @@ It contains:
 Java Native Interface (JNI) is a framework which provides an interface to communicate with another application written in another language like C, C++, Assembly etc. Java uses JNI framework to send output to the Console or interact with OS libraries.
 
 >[Java tutorial jvm2](https://www.javatpoint.com/jvm-java-virtual-machine)
+
+
+
+
+
+
+
+
 
 ## References
 
