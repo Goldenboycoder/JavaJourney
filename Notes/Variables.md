@@ -234,11 +234,62 @@ Now let us discuss the differences between the Instance variables and the Static
 - We can access instance variables through object references, and static variables can be accessed directly using the class name.
 - Instance variables are created when an object is created with the use of the keyword ‘new’ and destroyed when the object is destroyed. Static variables are created when the program starts and destroyed when the program stops.
 
+</br>
 
 
+# Memory Location and Lifecycle
+
+
+
+## Java memory model
+
+
+![Java(JVM) memory model](Media/JavaMemModel.png)
+
+[DigitalOcean tutorial](https://www.digitalocean.com/community/tutorials/java-jvm-memory-model-memory-management-in-java)
+
+
+The JVM Heap memory is divided into 2 physical parts young generation and old generation 
+
+
+### Memory Management in Java - Young Generation
+
+
+The young generation is the place where all the new objects are created. When the young generation is filled, garbage collection is performed. This garbage collection is called Minor GC. Young Generation is divided into three parts - Eden Memory and two Survivor Memory spaces. Important Points about Young Generation Spaces:
+
+- Most of the newly created objects are located in the Eden memory space.
+- When Eden space is filled with objects, Minor GC is performed and all the survivor objects are moved to one of the survivor spaces.
+- Minor GC also checks the survivor objects and move them to the other survivor space. So at a time, one of the survivor space is always empty.
+- Objects that are survived after many cycles of GC, are moved to the Old generation memory space. Usually, it’s done by setting a threshold for the age of the young generation objects before they become eligible to promote to Old generation.
+
+
+### Memory Management in Java - Old Generation
+
+Old Generation memory contains the objects that are long-lived and survived after many rounds of Minor GC. Usually, garbage collection is performed in Old Generation memory when it’s full. Old Generation Garbage Collection is called Major GC and usually takes a longer time.
+
+
+
+
+Eden Space (heap): The pool from which memory is initially allocated for most objects.
+
+Survivor Space (heap): The pool containing objects that have survived the garbage collection of the Eden space.
+
+Tenured Generation (heap): The pool containing objects that have existed for some time in the survivor space.
+
+Permanent Generation (non-heap): The pool containing all the reflective data of the virtual machine itself, such as class and method objects. With Java VMs that use class data sharing, this generation is divided into read-only and read-write areas.
+
+Code Cache (non-heap): The HotSpot Java VM also includes a code cache, containing memory that is used for compilation and storage of native code.
 
 ## References
 
 https://www.geeksforgeeks.org/variables-in-java/
 
 https://www.javatpoint.com/java-variables
+
+https://www.digitalocean.com/community/tutorials/java-jvm-memory-model-memory-management-in-java
+
+https://www.digitalocean.com/community/tutorials/java-heap-space-vs-stack-memory
+
+https://medium.com/swlh/understanding-object-life-cycle-573d055b51c6
+
+https://codeahoy.com/2017/08/06/basics-of-java-garbage-collection/
