@@ -282,6 +282,26 @@ The duration taken by garbage collector depends on the strategy used for garbage
 Permanent Generation or “Perm Gen” contains the application metadata required by the JVM to describe the classes and methods used in the application. Note that Perm Gen is not part of Java Heap memory. Perm Gen is populated by JVM at runtime based on the classes used by the application. Perm Gen also contains Java SE library classes and methods. Perm Gen objects are garbage collected in a full garbage collection.
 
 
+#### Java Memory Model - Method Area
+
+Method Area is part of space in the Perm Gen and used to store class structure (runtime constants and static variables) and code for methods and constructors.
+
+#### Java Memory Model - Memory Pool
+
+Memory Pools are created by JVM memory managers to create a pool of immutable objects if the implementation supports it. String Pool is a good example of this kind of memory pool. Memory Pool can belong to Heap or Perm Gen, depending on the JVM memory manager implementation.
+
+
+#### Java Memory Model - Runtime Constant Pool
+
+Runtime constant pool is per-class runtime representation of constant pool in a class. It contains class runtime constants and static methods. Runtime constant pool is part of the method area.
+
+
+
+### Java Memory Model - Java Stack Memory
+
+Java Stack memory is used for execution of a thread. They contain method specific values that are short-lived and references to other objects in the heap that is getting referred from the method. 
+
+Difference between Stack and Heap Memory.
 
 
 
