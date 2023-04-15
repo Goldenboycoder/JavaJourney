@@ -363,6 +363,77 @@ Based on the above explanations, we can easily conclude the following difference
 - Stack memory size is very less when compared to Heap memory. Because of simplicity in memory allocation (LIFO), stack memory is very fast when compared to heap memory.
 
 
+####  More Memory spaces
+
+Eden Space (heap): The pool from which memory is initially allocated for most objects.
+
+Survivor Space (heap): The pool containing objects that have survived the garbage collection of the Eden space.
+
+Tenured Generation (heap): The pool containing objects that have existed for some time in the survivor space.
+
+Permanent Generation (non-heap): The pool containing all the reflective data of the virtual machine itself, such as class and method objects. With Java VMs that use class data sharing, this generation is divided into read-only and read-write areas.
+
+Code Cache (non-heap): The HotSpot Java VM also includes a code cache, containing memory that is used for compilation and storage of native code.
+
+
+### Memory Management in Java - Java Heap Memory Switches
+
+Java provides a lot of memory switches that we can use to set the memory sizes and their ratios. Some of the commonly used memory switches are:
+
+| VM Switch | VM  Switch description |
+|:--:|:--:|
+| -Xms | For setting the initial heap size when JVM starts |
+| -Xmx | For setting the maximum heap size |
+| -Xmn | For setting the size of the Young Generation, rest of the space goes for Old Generation. |
+| -XX:PermGen | For setting the initial size of the Permanent Generation memory |
+| -XX:SurvivorRatio | For providing ratio of Eden space and Survivor Space, for example if Young Generation size is 10m and VM switch is -XX:SurvivorRatio=2 then 5m will be reserved for Eden Space and 2.5m each for both the Survivor spaces. The default value is 8 |
+| -XX:NewRatio | For providing ratio of old/new generation sizes. The default value is 2 |
+||
+
+
+
+>[VM options](https://www.oracle.com/java/technologies/javase/vmoptions-jsp.html)
+
+
+------------------------------------------------------
+</br></br></br></br></br>
+
+## Memory Management in Java - Java Garbage Collection
+
+
+Java Garbage Collection is the process to identify and remove the unused objects from the memory and free space to be allocated to objects created in future processing. One of the best features of Java programming language is the automatic garbage collection, unlike other programming languages such as C where memory allocation and deallocation is a manual process. Garbage Collector is the program running in the background that looks into all the objects in the memory and find out objects that are not referenced by any part of the program. All these unreferenced objects are deleted and space is reclaimed for allocation to other objects. One of the basic ways of garbage collection involves three steps:
+
+1. Marking: This is the first step where garbage collector identifies which objects are in use and which ones are not in use.
+2. Normal Deletion: Garbage Collector removes the unused objects and reclaim the free space to be allocated to other objects.
+3. Deletion with Compacting: For better performance, after deleting unused objects, all the survived objects can be moved to be together. This will increase the performance of allocation of memory to newer objects.
+
+
+There are two problems with a simple mark and delete approach.
+
+1. First one is that it’s not efficient because most of the newly created objects will become unused
+2. Secondly objects that are in-use for multiple garbage collection cycle are most likely to be in-use for future cycles too.
+
+The above shortcomings with the simple approach is the reason that Java Garbage Collection is Generational and we have Young Generation and Old Generation spaces in the heap memory. 
+
+We have already explained above how objects are scanned and moved from one generational space to another based on the Minor GC and Major GC.
+
+
+
+### Memory Management in Java - Java Garbage Collection Types
+
+There are five types of garbage collection types that we can use in our applications. We just need to use the JVM switch to enable the garbage collection strategy for the application. Let’s look at each of them one by one.
+
+- **Serial GC (-XX:+UseSerialGC)**: Serial GC uses the simple mark-sweep-compact approach for young and old generations garbage collection i.e Minor and Major GC.Serial GC is useful in client machines such as our simple stand-alone applications and machines with smaller CPU. It is good for small applications with low memory footprint.
+- **Parallel GC (-XX:+UseParallelGC)**: Parallel GC is same as Serial GC except that is spawns N threads for young generation garbage collection where N is the number of CPU cores in the system. We can control the number of threads using `-XX:ParallelGCThreads=n` JVM option.Parallel Garbage Collector is also called throughput collector because it uses multiple CPUs to speed up the GC performance. Parallel GC uses a single thread for Old Generation garbage collection.
+- **Parallel Old GC (-XX:+UseParallelOldGC)**: This is same as Parallel GC except that it uses multiple threads for both Young Generation and Old Generation garbage collection.
+- **Concurrent Mark Sweep (CMS) Collector (-XX:+UseConcMarkSweepGC)**: CMS Collector is also referred as concurrent low pause collector. It does the garbage collection for the Old generation. CMS collector tries to minimize the pauses due to garbage collection by doing most of the garbage collection work concurrently with the application threads.CMS collector on the young generation uses the same algorithm as that of the parallel collector. This garbage collector is suitable for responsive applications where we can’t afford longer pause times. We can limit the number of threads in CMS collector using `-XX:ParallelCMSThreads=n` JVM option.
+- **G1 Garbage Collector (-XX:+UseG1GC)**: The Garbage First or G1 garbage collector is available from Java 7 and its long term goal is to replace the CMS collector. The G1 collector is a parallel, concurrent, and incrementally compacting low-pause garbage collector.Garbage First Collector doesn’t work like other collectors and there is no concept of Young and Old generation space. It divides the heap space into multiple equal-sized heap regions. When a garbage collection is invoked, it first collects the region with lesser live data, hence “Garbage First”. You can find more details about it at Garbage-First Collector Oracle Documentation.
+
+
+### Memory Management in Java - Java Garbage Collection Monitoring
+
+
+
 
 
 
