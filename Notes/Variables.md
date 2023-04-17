@@ -433,9 +433,52 @@ There are five types of garbage collection types that we can use in our applicat
 ### Memory Management in Java - Java Garbage Collection Monitoring
 
 
+We can use `jstat` command line tool to monitor the JVM memory and garbage collection activities. It ships with standard JDK, so you don’t need to do anything else to get it. For executing `jstat` you need to know the process id of the application, you can get it easily using `ps -eaf | grep java` command.
+```cmd
+pc@user:~/Downloads/jdk1.7.0_55/demo/jfc/Java2D$ java -Xmx120m -Xms30m -Xmn10m -XX:PermSize=20m -XX:MaxPermSize=20m -XX:+UseSerialGC -jar Java2Demo.jar
+```
+
+```cmd
+jstat -gc <process ID> 1000
+```
+
+The last argument for jstat is the time interval between each output, so it will print memory and garbage collection data every 1 second. Let’s go through each of the columns one by one.
+
+- **S0C and S1C**: This column shows the current size of the Survivor0 and Survivor1 areas in KB.
+- **S0U and S1U**: This column shows the current usage of the Survivor0 and Survivor1 areas in KB. Notice that one of the survivor areas are empty all the time.
+- **EC and EU**: These columns show the current size and usage of Eden space in KB. Note that EU size is increasing and as soon as it crosses the EC, Minor GC is called and EU size is decreased.
+- **OC and OU**: These columns show the current size and current usage of Old generation in KB.
+- **PC and PU**: These columns show the current size and current usage of Perm Gen in KB.
+- **YGC and YGCT**: YGC column displays the number of GC event occurred in young generation. YGCT column displays the accumulated time for GC operations for Young generation. Notice that both of them are increased in the same row where EU value is dropped because of minor GC.
+- **FGC and FGCT**: FGC column displays the number of Full GC event occurred. FGCT column displays the accumulated time for Full GC operations. Notice that Full GC time is too high when compared to young generation GC timings.
+- **GCT**: This column displays the total accumulated time for GC operations. Notice that it’s sum of YGCT and FGCT column values.
 
 
+The advantage of jstat is that it can be executed in remote servers too where we don’t have GUI. Notice that the sum of S0C, S1C and EC is 10m as specified through -Xmn10m JVM option.
 
+
+#### Java VisualVM with Visual GC
+
+If you want to see memory and GC operations in GUI, then you can use `jvisualvm` tool. Java VisualVM is also part of JDK, so you don’t need to download it separately. Just run `jvisualvm` command in the terminal to launch the Java VisualVM application. Once launched, you need to install **Visual GC** plugin from Tools -< Plugins option, as shown in below image.
+
+![VisualVM](../Media/VisualVM-Visual-GC-Plugin.png)
+
+After installing `Visual GC`, just open the application from the left side column and head over to `Visual GC` section. You will get an image of JVM memory and garbage collection details as shown in below image.
+
+![VisualGC](../Media/Serial-GC-VisualGC.png)
+
+
+### Java Garbage Collection Tuning
+
+**Java Garbage Collection Tuning should be the last option you should use** for increasing the throughput of your application and only when you see a drop in performance because of longer GC timings causing application timeout. 
+
+If you see `java.lang.OutOfMemoryError: PermGen space` errors in logs, then try to monitor and increase the Perm Gen memory space using `-XX:PermGen` and `-XX:MaxPermGen` JVM options. 
+
+You might also try using `-XX:+CMSClassUnloadingEnabled` and check how it’s performing with CMS Garbage collector. If you see a lot of Full GC operations, then you should try increasing Old generation memory space. 
+
+Overall garbage collection tuning takes a lot of effort and time and there is no hard and fast rule for that. You would need to try different options and compare them to find out the best one suitable for your application. 
+
+That’s all for Java Memory Model, Memory Management in Java and Garbage Collection, I hope it helps you in understanding JVM memory and garbage collection process.
 
 
 
