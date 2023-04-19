@@ -22,7 +22,7 @@ Primitive data are only single values and have no special capabilities.  There a
 | int | twos-complement integer | 0 | 32 bits | -2,-1,0,1,2 | -2,147,483,648 to 2,147,483,647 |
 | long | twos-complement integer | 0 | 64 bits | -2L,-1L,0L,1L,2L | -9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 |
 | float | IEEE 754 floating point | 0.0 | 32 bits | 1.23e100f , -1.23e-100f , .3f ,3.14F | up to 7 decimal digits |
-| double | IEEE 754 floating point | 0.0 | 64 bits | 1.23456e300d , -123456e-300d , 1e1d | upto 16 decimal digits |
+| double | IEEE 754 floating point | 0.0 | 64 bits | 1.23456e300d , -123456e-300d , 1e1d | up to 16 decimal digits |
 ---
 
 </br></br>
@@ -30,10 +30,153 @@ Primitive data are only single values and have no special capabilities.  There a
 Let us discuss and implement each one of the following data types that are as follows:
 
 
+### Boolean
+
+Boolean data type represents only one bit of information either true or false which is intended to represent the two truth values of logic and Boolean algebra, but the size of the boolean data type is virtual machine-dependent. Values of type boolean are not converted implicitly or explicitly (with casts) to any other type. But the programmer can easily write conversion code.
+
+Syntax: 
+```java
+boolean booleanVar;
+```
+Size: Virtual machine dependent
+
+### Byte Data Type
+The byte data type is an 8-bit signed two’s complement integer. The byte data type is useful for saving memory in large arrays.
+
+Syntax: 
+```java
+byte byteVar;
+```
+Size: 1 byte (8 bits)
+
+### Short Data Type
+The short data type is a 16-bit signed two’s complement integer. Similar to byte, use a short to save memory in large arrays, in situations where the memory savings actually matters.
+
+Syntax: 
+```java
+short shortVar;
+```
+Size: 2 bytes (16 bits)
+
+### Integer Data Type
+It is a 32-bit signed two’s complement integer.
+
+Syntax: 
+```java
+int intVar;
+```
+Size: 4 bytes ( 32 bits )
+
+**N.B**: In Java SE 8 and later, we can use the int data type to represent an unsigned 32-bit integer, which has a value in the range [0, 2^(32)-1]. Use the Integer class to use the int data type as an unsigned integer. 
 
 
+### Long Data Type
+The range of a long is quite large. The long data type is a 64-bit two’s complement integer and is useful for those occasions where an int type is not large enough to hold the desired value. The size of the Long Datatype is 8 bytes (64 bits).
+
+Syntax: 
+```java
+long longVar;
+```
+
+**N.B**: In Java SE 8 and later, you can use the long data type to represent an unsigned 64-bit long, which has a minimum value of 0 and a maximum value of 2^(64)-1. The Long class also contains methods like comparing Unsigned, divide Unsigned, etc to support arithmetic operations for unsigned long. 
 
 
+### Float Data Type
+The float data type is a single-precision 32-bit IEEE 754 floating-point. Use a float (instead of double) if you need to save memory in large arrays of floating-point numbers. The size of the float data type is 4 bytes (32 bits).
+
+Syntax: 
+```java
+float floatVar;
+```
+
+### Double Data Type
+The double data type is a double-precision 64-bit IEEE 754 floating-point. For decimal values, this data type is generally the default choice. The size of the double data type is 8 bytes or 64 bits.
+
+Syntax:
+```java
+double doubleVar;
+```
+
+**N.B**: Both float and double data types were designed especially for scientific calculations, where approximation errors are acceptable. If accuracy is the most prior concern then, it is recommended not to use these data types and use BigDecimal class instead. 
+
+It is recommended to go through [rounding off errors in java](https://www.geeksforgeeks.org/rounding-off-errors-java/).
+
+
+### Char Data Type
+The char data type is a single 16-bit Unicode character with the size of 2 bytes (16 bits).
+
+Syntax: 
+```java
+char charVar;
+```
+
+#### Why is the Size of char 2 bytes in Java? 
+So, other languages like C/C++ use only ASCII characters, and to represent all ASCII characters 8 bits is enough. But java uses the Unicode system not the ASCII code system and to represent the Unicode system 8 bits is not enough to represent all characters so java uses 2 bytes for characters. Unicode defines a fully international character set that can represent most of the world’s written languages. It is a unification of dozens of character sets, such as Latin, Greek, Cyrillic, Katakana, Arabic, and many more.
+
+
+```java
+// Java Program to Demonstrate Char Primitive Data Type
+
+// Class
+class GFG {
+
+	// Main driver method
+	public static void main(String args[])
+	{
+
+		// Creating and initializing custom character
+		char a = 'G';
+
+		// Integer data type is generally
+		// used for numeric values
+		int i = 89;
+
+		// use byte and short
+		// if memory is a constraint
+		byte b = 4;
+
+		// this will give error as number is
+		// larger than byte range
+		// byte b1 = 7888888955;
+
+		short s = 56;
+
+		// this will give error as number is
+		// larger than short range
+		// short s1 = 87878787878;
+
+		// by default fraction value
+		// is double in java
+		double d = 4.355453532;
+
+		// for float use 'f' as suffix as standard
+		float f = 4.7333434f;
+
+		// need to hold big range of numbers then we need
+		// this data type
+		long l = 12121;
+
+		System.out.println("char: " + a);
+		System.out.println("integer: " + i);
+		System.out.println("byte: " + b);
+		System.out.println("short: " + s);
+		System.out.println("float: " + f);
+		System.out.println("double: " + d);
+		System.out.println("long: " + l);
+	}
+}
+
+```
+```
+Output
+char: G
+integer: 89
+byte: 4
+short: 56
+float: 4.7333436
+double: 4.355453532
+long: 12121
+```
 
 
 
