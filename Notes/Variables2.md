@@ -178,6 +178,183 @@ double: 4.355453532
 long: 12121
 ```
 
+## Non-Primitive data types or Reference Data types
+
+In Java, non-primitive data types are known as reference types. In other words, a variable of class type is called reference data type. It contains the address (or reference) of dynamically created objects. For example, if Demo is a class and we have created its object d, then the variable d is known as a reference type.
+
+It refers to objects. It is not pre-defined. It is created by the programmer if required. The reference types hold the references of objects. All reference types are a subclass of type `java.lang.Object`. It provides access to the objects stored in the memory.
+
+The examples of reference data types are class, interface, String, Arrays, etc.
+
+There are the following five types of reference types in Java:
+| Reference Type | Description |
+|:--:|:--:|
+| Class | It is a set of instructions. It describes the content of the object. |
+| Array | It provides the fixed-size data structure that stores the elements of the same type. |
+| Annotations | It provides a way to associate metadata with program elements. |
+| Interface | It is implemented by Java classes. |
+| Enumeration | It is a special kind of class that is type-safe. Each element inside the enum is an instance of that enum. |
+
+
+### Reference vs Primitive Data Types
+
+| Reference Type | Primitive Type |
+|:--:|:--:|
+| It is not pre-defined except the String | It is pre-defined in Java |
+| It is not pre-defined except the String | It is pre-defined in Java |
+| All reference type begins with Uppercase letter | All primitive type begins with a lowercase letter|
+| Non-primitive types have all the same size | The size of a primitive type depends on the data type |
+| It is used to invoke or call methods | We cannot invoke the method with a primitive type |
+| It can be null | It cannot be null. It always has value |
+| Examples of reference data types are class, Arrays, String, Interface, etc | Examples of primitive data types are int, float, double, Boolean, long, etc |
+| JVM allocates 8 bytes for each reference variable, by default | Its size depends on the data type |
+| Example: Demo d1; | Example: int num=78; |
+
+
+
+### Memory Allocation and Garbage Collection
+In Java, the new keyword is used to create an instance of the class. In other words, it instantiates a class by allocating memory for a new object and returning a reference to that memory. Objects occupy memory in the Java heap space. We can also use the new keyword to create the array object.
+```java
+ClassName objectName = new ClassName();  
+```
+If there are no references to an object, the memory used by that object can be reclaimed during the garbage collection process.
+
+### Conversion Between Primitive Type and Reference Type
+
+The conversion of primitive type to reference type is called [autoboxing](https://www.javatpoint.com/autoboxing-and-unboxing) and the conversion of reference type to primitive type is called unboxing.
+
+The automatic conversion of primitive data types into its equivalent Wrapper type is known as boxing and opposite operation is known as unboxing. This is the new feature of Java5. So java programmer doesn't need to write the conversion code.
+
+Examples:
+
+Boxing
+```java
+class BoxingExample1{  
+  public static void main(String args[]){  
+    int a=50;  
+	Integer a2=new Integer(a);//Boxing  
+
+	Integer a3=5;//Boxing  
+		
+	System.out.println(a2+" "+a3);  
+ }   
+}  
+```
+
+Unboxing
+
+```java
+class UnboxingExample1{  
+  public static void main(String args[]){  
+    Integer i=new Integer(50);  
+	int a=i;  // unboxing
+		
+	System.out.println(a);  
+ }   
+}  
+```
+
+Internal unboxing
+```java
+class UnboxingExample2{  
+  public static void main(String args[]){  
+    Integer i=new Integer(50);  
+          
+	if(i<100){            //unboxing internally  
+	System.out.println(i);  
+	}  
+ }   
+}  
+```
+
+### Autoboxing/Unboxing Rules
+
+
+In method overloading, boxing and unboxing can be performed. There are some rules for method overloading with boxing:
+- Widening beats boxing
+- Widening beats varargs
+- Boxing beats varargs
+
+
+
+#### Example of Autoboxing where widening beats boxing 
+If there is possibility of widening and boxing, widening beats boxing.
+
+```java
+class Boxing1{  
+	static void m(int i){System.out.println("int");}  
+	static void m(Integer i){System.out.println("Integer");}  
+  
+  	public static void main(String args[]){  
+		short s=30;  
+		m(s);  
+ 	}   
+}  
+```
+Output
+```
+int
+```
+
+#### Example of Autoboxing where widening beats varargs
+
+If there is possibility of widening and varargs, widening beats var-args.
+
+```java
+class Boxing2{  
+  static void m(int i, int i2){System.out.println("int int");}  
+  static void m(Integer... i){System.out.println("Integer...");}  
+  
+  public static void main(String args[]){  
+   short s1=30,s2=40;  
+   m(s1,s2);  
+ }   
+}  
+```
+Output
+```
+int int
+```
+
+#### Example of Autoboxing where boxing beats varargs
+
+Let's see the program where boxing beats variable argument:
+```java   
+class Boxing3{  
+  static void m(Integer i){System.out.println("Integer");}  
+  static void m(Integer... i){System.out.println("Integer...");}  
+  
+  public static void main(String args[]){  
+   int a=30;  
+   m(a);  
+ }   
+}  
+```
+Output
+```
+Integer
+```
+
+#### Method overloading with Widening and Boxing
+
+Widening and Boxing can't be performed as given below:
+
+```java
+class Boxing4{  
+  static void m(Long l){System.out.println("Long");}  
+  
+  public static void main(String args[]){  
+   int a=30;  
+   m(a);  
+ }   
+}  
+```
+Output
+```
+Compile Time Error
+```
+
+
 
 
 
@@ -186,3 +363,7 @@ long: 12121
 https://www.geeksforgeeks.org/data-types-in-java/
 
 https://www.javatpoint.com/java-data-types
+
+https://www.javatpoint.com/reference-data-types-in-java
+
+https://www.javatpoint.com/autoboxing-and-unboxing
