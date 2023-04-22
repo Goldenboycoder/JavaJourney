@@ -355,6 +355,66 @@ Compile Time Error
 ```
 
 
+### Comparing Reference types
+
+We can also compare the reference types in Java. Java provides two ways to compare reference types:
+
+#### By using the equal (==) operator
+
+It compares the memory locations of the objects. If the memory address (reference) of both objects is the same, the objects are equal. 
+
+**Note** that it does not compare the contents of the object. For example:
+```java
+Demo d1 = new Demo("Atlanta"); //creating a reference of Demo class  
+Demo d2 = d1; //assigning the reference d1 into d2  
+if(d1==d2) //comparing reference   
+```
+
+#### By using the String.equals() Method
+
+The method belongs to the String class. It overrides the equals() method of the Object class. It also uses the equal operator (==) for comparing the reference type. For example, consider the following code snippet:
+
+```java
+String str1="JAVA";    
+String str2="JAVA";    
+String str3="java";    
+System.out.println(str1.equals(str2));     //returns true because content and case is same    
+System.out.println(str1.equals(str3));   //returns false because case is not same    
+```
+
+
+### Copying Reference Type
+
+There are two possibilities when we copy reference types, either a copy of the reference to an object is made or an actual copy (creating a new copy) of the object is made.
+
+In the following example, we have assigned a reference to the object. If we made any changes in the object, it will also reflect the reference and vice-versa.
+
+```java
+Sum s1 = new Sum();  
+Sum s2= s1;  
+```
+
+
+### Casting
+
+Type casting is when you assign a value of one primitive data type to another type.
+
+In Java, there are two types of casting:
+**Widening Casting (automatically)** - converting a smaller type to a larger type size
+```
+	byte -> short -> char -> int -> long -> float -> double
+```
+
+**Narrowing Casting (manually)** - converting a larger type to a smaller size type
+```
+	double -> float -> long -> int -> char -> short -> byte
+```
+```java
+int myInt = (int) myDouble; // Manual casting: double to int
+```
+
+
+
 
 
 
