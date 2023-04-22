@@ -413,6 +413,130 @@ In Java, there are two types of casting:
 int myInt = (int) myDouble; // Manual casting: double to int
 ```
 
+## Final Variables
+
+In Java, we can use final keyword with variables, methods, and classes. When the final keyword is used with a variable of primitive data types such as int, float, etc... , the value of the variable cannot be changed. 
+
+Example 1: Usage of final with primitive datatype
+
+```java
+// Java Program to illustrate Use of Final Keyword
+// With Primitive Datatypes
+
+// Main class
+class GFG {
+
+	// Main driver method
+	public static void main(String args[])
+	{
+
+		// Final primitive variable
+		final int i = 10;
+		i = 30;
+
+		// Error will be generated above
+	}
+}
+
+```
+
+error: cannot assign a value to final variable
+
+Now you must be wondering what if we do use final keyword non-primitive variables, let us explore the same as we did above with the help of an example. 
+
+**Note**: Non-primitive variables are always references to objects in Java, the members of the referred object can be changed. final for non-primitive variables just means that they cannot be changed to refer to any other object.
+
+Example 2: Usage of final with primitive datatype 
+
+```java
+// Java Program to illustrate Use of Final Keyword
+// With Primitive Datatypes
+
+// Class 1
+class Helper {
+	int i = 10;
+}
+
+// Class 2
+// main class
+class GFG {
+
+	// Main driver method
+	public static void main(String args[])
+	{
+
+		final Helper t1 = new Helper();
+		t1.i = 30; // Works
+
+		// Print statement for successful execution of
+		// Program
+		System.out.print("Successfully executed");
+	}
+}
+
+```
+Output
+```
+Successfully executed
+```
+
+A final variable that have no value it is called blank final variable or uninitialized final variable. It can be initialized **in the constructor only**. 
+
+The blank final variable **can be static** also which will be **initialized in the static block only**. We will have detailed learning of these. Let's first learn the basics of final keyword.
+
+
+
+### Java final method
+If you make any method as final, you cannot override it.
+
+Example of final method
+```java
+class Bike{  
+  final void run(){System.out.println("running");}  
+}  
+     
+class Honda extends Bike{  
+   void run(){System.out.println("running safely with 100kmph");}  
+     
+   public static void main(String args[]){  
+   Honda honda= new Honda();  
+   honda.run();  
+   }  
+}  
+```
+Output
+```
+Compile Time Error
+```
+
+### Java final class
+If you make any class as final, you cannot extend it.
+
+Example of final class
+```java
+final class Bike{}  
+  
+class Honda1 extends Bike{  
+  void run(){System.out.println("running safely with 100kmph");}  
+    
+  public static void main(String args[]){  
+  Honda1 honda= new Honda1();  
+  honda.run();  
+  }  
+}  
+```
+
+1. **Q**:Is final method inherited?
+	- **A**: Yes, final method is inherited but you cannot override it.
+
+2. **Q**: Can we initialize blank final variable?
+	- **A**: Yes, but only in constructor
+
+3. **Q**: What is final parameter?
+	- **A**: If you declare any parameter as final, you cannot change the value of it.
+
+4. **Q**: Can we declare a constructor final?
+	- **A**: No, because constructor is never inherited.
 
 
 
@@ -427,3 +551,7 @@ https://www.javatpoint.com/java-data-types
 https://www.javatpoint.com/reference-data-types-in-java
 
 https://www.javatpoint.com/autoboxing-and-unboxing
+
+https://www.geeksforgeeks.org/final-variables-in-java/
+
+https://www.javatpoint.com/final-keyword
