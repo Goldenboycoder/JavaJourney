@@ -11,3 +11,4 @@ This repository will be used to document my Java learning journey.
     2. [Memory Model](Notes/Variables.md/#memory-location-and-lifecycle)
     3. [Garbage Collector](Notes/Variables.md/#memory-management-in-java---java-garbage-collection)
     4. [Primitive Types, Non-Primitive Types Casting, Final Variables](Notes/Variables2.md)
+5. [Methods](Notes/Methods.md)
