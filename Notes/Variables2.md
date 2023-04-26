@@ -539,8 +539,106 @@ class Honda1 extends Bike{
 	- **A**: No, because constructor is never inherited.
 
 
+## Local variable inference
+
+Java 10 introduced a new feature called local variable type inference, which allows you to use the keyword `var` in front of a new variable.
+
+With this feature, Java will infer (that is, guess automatically) the data type from the local context. Type inference is controversial since it contrasts the previously explained verbosity of defining variables. 
+
+The advantages and disadvantages of such a feature are disputable, but the fact is that other statically typed languages, such as C++, support type inference.
 
 
+In any case, type inference cannot completely replace the use of data types because it works only with local variables, which are variables inside a method. Let’s look at an example with `var`:
+```java
+var hello = "Hello";
+System.out.println(hello);
+```
+You declare the variable hello with the var keyword in order to instruct Java to detect its data type. 
+After that, you print it to the console in the usual way to confirm it works as expected
+
+Type inference happens during the compilation process — that is, when you compile the code. 
+
+The compilation process turns plain text source code into machine code and applies various optimizations, including type inference. This ensures that the correct amount of system memory is available for the type inferred variables. 
+
+Thus, the machine code that you run after compiling is fully optimized, as if you have manually specified all the data types.
+
+
+In this example, the `var` keyword works because the variable is local, and the `var` data type works only with local variables. Local variables are defined inside methods and are accessible only inside the methods, which is why they’re called “local”.
+
+To show that `var` can only be used for local variables, try placing it outside the main method, like so:
+
+```java
+public class Hello {
+	var hello = "Hello";
+	public static void main(String[] args) {
+		// example code
+	}
+}
+```
+
+Output
+```
+|  Error:
+|  'var' is not allowed here
+|  	var hello = "Hello";
+|   ^-^
+```
+
+`var` is not allowed there because hello is outside a method and it is no longer considered local. Thus, type inference does not work for non-local variables because the context cannot be used reliably to detect the data type.
+
+While using `var` can be challenging and is not required, you will likely come across it so it is useful to know about it.
+
+
+## Reserved Keywords
+
+When declaring variables in Java, there is one more important rule to know. There are reserved keywords that you cannot use for variables names. For example, you cannot declare a primitive of type `int` and name it `new`like this:
+```java
+int new = 1;
+```
+If you try this example, you will get compilation errors because `new` is a reserved keyword.
+
+Output
+```
+|  Error:
+|  '.class' expected
+|  int new = 1;
+|      ^
+|  Error:
+|  <identifier> expected
+|  int new = 1;
+|         ^
+|  Error:
+|  '(' or '[' expected
+|  int new = 1;
+|          ^
+|  Error:
+|  unexpected type
+|    required: value
+|    found:    class
+|  int new = 1;
+|  ^--^
+|  Error:
+|  missing return statement
+|  int new = 1;
+|  ^----------^
+```
+
+The keyword new is used for creating new objects and Java is not expecting it at this position. In the list of errors in the previous output, the first part is the most important:
+
+Output
+```
+|  Error:
+|  '.class' expected
+|  int new = 1;
+|      ^
+```
+
+The error `'.class' expected` means that when you use the `new` keyword, Java expects that a class will follow. At this point, Java is not able to interpret the statement and the rest of the errors follow.
+
+
+The rest of the reserved keywords, such as `abstract`, `continue`, `default`, `for`, and `break`, also have specific meanings in Java and cannot be used for variables names. 
+
+The full list of the reserved keywords can be found on [the Java Language Keywords page](https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html). Even if you don’t remember all the reserved keywords, you can use compilation errors to identify the issue.
 
 # References
 
@@ -555,3 +653,5 @@ https://www.javatpoint.com/autoboxing-and-unboxing
 https://www.geeksforgeeks.org/final-variables-in-java/
 
 https://www.javatpoint.com/final-keyword
+
+https://www.digitalocean.com/community/tutorials/understanding-data-types-in-java

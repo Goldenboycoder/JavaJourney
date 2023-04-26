@@ -404,6 +404,148 @@ Please note that when we pass a reference, a new reference variable to the same 
 >[Digital Ocean Tutorial, java is pass by value](https://www.digitalocean.com/community/tutorials/java-is-pass-by-value-and-not-pass-by-reference)
 
 
+First, what does pass by value and pass by reference mean?
+
+- Pass by value: The method parameter values are copied to another variable and then the copied object is passed to the method. The method uses the copy.
+- Pass by reference: An alias or reference to the actual parameter is passed to the method. The method accesses the actual parameter.
+
+Often, the confusion around these terms is a result of the concept of the object reference in Java. Technically, Java is always pass by value, because even though a variable might hold a reference to an object, that object reference is a value that represents the object’s location in memory. Object references are therefore passed by value.
+
+Both reference data types and primitive data types are passed by value.
+
+
+### Demonstrating pass by value
+The following example demonstrates how values are passed in Java.
+
+The example program uses the following class:
+
+```java
+public class Balloon {
+
+	private String color;
+
+	public Balloon() {}
+	
+	public Balloon(String c) {
+		this.color = c;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+}
+```
+
+
+The following example program uses a generic method, `swap()`, that swaps two variables. Another method, `changeValue()`, attempts to change the variable values.
+
+
+```java
+public class Test {
+
+	public static void main(String[] args) {
+
+		Balloon red = new Balloon("Red"); // memory reference = 50
+		Balloon blue = new Balloon("Blue"); // memory reference = 100
+		
+		swap(red, blue);
+		System.out.println("After the swap method executes:");
+		System.out.println("`red` color value = " + red.getColor());
+		System.out.println("`blue` color value = " + blue.getColor());
+		
+		changeValue(blue);
+		System.out.println("After the changeValue method executes:");
+		System.out.println("`blue` color value = " + blue.getColor());
+		
+	}
+
+	// Generic swap method
+	public static void swap(Object o1, Object o2){
+		Object temp = o1;
+		o1 = o2;
+		o2 = temp;
+	}
+
+	private static void changeValue(Balloon balloon) { // balloon = 100
+		balloon.setColor("Red"); // balloon = 100
+		balloon = new Balloon("Green"); // balloon = 200
+		balloon.setColor("Blue"); // balloon = 200
+	}
+
+}
+```
+
+
+When you execute the example program, you get the following output:
+
+Output
+```
+After the swap method executes:
+'red' color value = Red
+'blue' color value = Blue
+After the changeValue method executes:
+'blue' color value = Red
+```
+
+The output shows that the `swap()` method didn’t swap the color values of the original objects. This helps to show that Java is pass by value, since the `swap()` method only acts upon copies of the original object reference values.
+
+This `swap()` method test can be used with any programming language to check whether it’s pass by value or pass by reference.
+
+
+#### The Example `swap()` Method Explained
+When you use the new operator to create an instance of a class, the object is created and the variable contains the location in memory where the object is saved.
+
+```java
+Balloon red = new Balloon("Red");
+Balloon blue = new Balloon("Blue");
+```
+
+
+Here’s a step-by-step breakdown of what happens when the swap() method executes:
+
+- Assume that red is pointing to memory location 50 and blue is pointing to memory location 100, and that these are the memory locations of both Balloon objects.
+
+- When the class calls the `swap()` method with the red and blue variables as arguments, two new object variables, `o1` and `o2`, are created. `o1` and `o2` also point to memory locations 50 and 100 respectively.
+
+The following code snippet explains what happens within the swap() method:
+
+```java
+public static void swap(Object o1, Object o2) { // o1 = 50, o2 = 100
+	Object temp = o1; // assign the object reference value of o1 to temp: temp = 50, o1 = 50, o2 = 100
+	o1 = o2; // assign the object reference value of o2 to o1: temp = 50, o1 = 100, o2 = 100
+	o2 = temp; // assign the object reference value of temp to o2: temp = 50, o1 = 100, o2 = 50
+} // method terminated
+```
+
+- The values of o1 and o2 are swapped, **but because the values are copies of the red and blue memory locations**, `there is no change to the values` of the red and blue color values.
+
+Since the variables contain the reference to the objects, it’s a common mistake to assume that you’re passing the reference and Java is pass by reference. 
+
+However, you’re passing a value which is a copy of the reference and therefore it’s pass by value.
+
+
+#### The Example changeValue() Method Explained
+
+The next method in the example program changes the color value of the object referenced by the blue variable:
+
+
+Here’s a step-by-step breakdown of what happens within the `changeValue()` method:
+
+- The class calls the `changeValue()` method on the `blue` variable that references memory location 100. The first line creates a reference that also points to memory location 100. The color value of the object at memory location 100 is changed to `"Red"`.
+
+- The second line creates a new object (with color value `"Green"`). The new object is at memory location 200. Any further methods executed on the `balloon` variable act upon the object at memory location 200, and don’t affect the object at memory location 100. The new `balloon` variable overwrites the reference created in line 1 and the balloon reference from line 1 is no longer accessible within this method.
+
+- The third line changes the color value of the new `Balloon` object at memory location 200 to `"Blue"`, but does not affect the original object referenced by `blue` at memory location 100. This explains why the final line of the example program output prints `blue color value = Red`, which reflects the change from line 1.
+
+
+
+
+
+
 
 
 
