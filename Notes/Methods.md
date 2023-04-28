@@ -543,14 +543,116 @@ Here’s a step-by-step breakdown of what happens within the `changeValue()` met
 
 
 
-
-
-
-
-
-
 # Java main() method
-https://www.javatpoint.com/java-main-method
+
+The main() is the starting point for JVM to start execution of a Java program. Without the main() method, JVM will not execute the program. The syntax of the main() method is:
+
+```mermaid
+---
+title: Method Declaration
+---
+flowchart TB
+    subgraph id2[" "]
+        direction TB
+        subgraph id1[" "]
+            direction TB
+            w1[public]
+			w5[static]
+            w2[void]
+            w3[main]
+            w4["(String args[])"]
+            subgraph id3[" "]
+                w3
+                w4
+            end
+        end
+        
+        w1 --> d1[Access Specifier]
+        w2 ---> d2[Return Type]
+        w3 ----> d3[Method Name]
+        w4 -----> d4[Array of string type]
+		w5 --> d5[Keyword]
+        
+    end
+```
+
+
+Values passed to the `main()` method is called arguments. These arguments are stored into `args[]` array, so the name `args[]` is generally used for it.
+
+**What happens if the main() method is written without String args[]?**
+
+The program will compile, but not run, because JVM will not recognize the main() method. Remember JVM always looks for the main() method with a string type array as a parameter.
+
+## Execution Process
+
+First, JVM executes the static block, then it executes static methods, and then it creates the object needed by the program. Finally, it executes the instance methods. JVM executes a static block on the highest priority basis. It means JVM first goes to static block even before it looks for the main() method in the program.
+
+Example
+```java
+class  Demo  
+{  
+	static                  //static block  
+	{  
+		System.out.println("Static block");  
+	}  
+
+	public static void main(String args[])  //static method  
+	{  
+		System.out.println("Static method");  
+	}  
+}  
+```
+
+Output:
+```
+Static block
+Static method
+```
+
+We observe that JVM first executes the static block, if it is present in the program. After that it searches for the main() method. If the main() method is not found, it gives error.
+
+Example
+
+A program that does not have the main() method gives an error at run time.
+```java
+class DemoStaticBlock  
+{  
+	static                                  //static block  
+	{  
+		System.out.println("Static block");  
+	}  
+}    
+``` 
+Output:
+```
+Error: Main method not found in the class Demo, please define the main method as:
+public static void main(String[] args)
+or a JavaFX application class must extend javafx.application.Application
+```
+
+
+So the `main()` method should always be written as:
+```
+public static void main(String args[])  
+```
+We can interchange public and static and write it as follows:
+```
+static public void main(String args[])  
+```
+We can also use the different name for the String type array and write it as:
+```
+static public void main(String[] x)  
+```
+Different ways of writing main() method are:
+```
+static public void main(String []x)  
+static public void main(String...args)  
+```
+String...args: It allows the method to accept zero or multiple arguments. There should be exactly three dots between String and array; otherwise, it gives an error.
+
+
+
+>[Main method java point tutorial](https://www.javatpoint.com/java-main-method)
 
 
 # References
