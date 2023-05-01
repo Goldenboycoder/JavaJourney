@@ -12,4 +12,4 @@ This repository will be used to document my Java learning journey.
     3. [Garbage Collector](Notes/Variables.md/#memory-management-in-java---java-garbage-collection)
     4. [Primitive Types, Non-Primitive Types Casting, Final Variables](Notes/Variables2.md)
 5. [Methods](Notes/Methods.md)
-6. [Operators](Notes/Operators.md)
+6. [Operators and Strings](Notes/Operators.md)
