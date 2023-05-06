@@ -14,9 +14,12 @@ This repository will be used to document my Java learning journey.
     4. [Primitive Types, Non-Primitive Types Casting, Final Variables](Notes/Variables2.md)
 5. [Methods](Notes/Methods.md)
 6. [Operators and Strings](Notes/Operators.md)
+7. [Data Structures](Notes/DataStructures.md)
+    1. [Array](Notes/DataStructures.md/#array)
 
 # Exercises
 
 ## Table Of Contents
 
 1. [LanguageBasics](Exercises/LanguageBasics/)
+2. [Data Structures](Exercises/DataStructures/)
