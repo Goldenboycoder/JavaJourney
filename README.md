@@ -1,7 +1,8 @@
 # JavaJourney
 This repository will be used to document my Java learning journey.
+# Theory
 
-# Table Of Contents
+## Table Of Contents
 
 1. [History](Notes/History.md) 
 2. [Compilation](Notes/Compilation.md)
@@ -13,3 +14,9 @@ This repository will be used to document my Java learning journey.
     4. [Primitive Types, Non-Primitive Types Casting, Final Variables](Notes/Variables2.md)
 5. [Methods](Notes/Methods.md)
 6. [Operators and Strings](Notes/Operators.md)
+
+# Exercises
+
+## Table Of Contents
+
+1. [LanguageBasics](Exercises/LanguageBasics/)
