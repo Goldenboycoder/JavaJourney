@@ -663,3 +663,7 @@ class GFG {
 https://www.geeksforgeeks.org/arrays-in-java/
 
 https://www.javatpoint.com/array-in-java
+
+https://www.geeksforgeeks.org/list-interface-java-examples/
+
+https://www.javatpoint.com/java-list
