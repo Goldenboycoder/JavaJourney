@@ -6,21 +6,18 @@ import java.util.List;
 public class LeftRotation{
     public static List<Integer> rotateLeft(int d, List<Integer> arr) {
         // Write your code here
-        // [1,2,3,4]
-        // d= 1 [2,3,4,1]
-        int size = arr.size();
-        List<Integer> arr2 = new ArrayList<Integer>(arr);
-        for(int i =0 ;i<arr.size();i++){
-            System.out.println("At index "+i+" value "+arr.get(i));
-            int nidx =  (i + d +1) % arr.size() ; 
-            arr2.set(nidx, arr.get(i)) ;
+        // [1,2,3,4,5]
+        // d= 1 [2,3,4,5,1]
+        int effectiveShifts = d % arr.size(); // no need to loop more than the array size
+        for(int i =0 ;i < effectiveShifts;i++){
+            arr.add(arr.remove(0));
         }
-        return arr2;
+        return arr;
     }
 
     public static void main(String[] args){
         List<Integer> arr = new ArrayList<Integer>(Arrays.asList(1,2,3,4,5));
-        System.out.println(rotateLeft(2, arr));
+        System.out.println(rotateLeft(4, arr));
     }
 
 
