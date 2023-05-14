@@ -16,6 +16,7 @@ This repository will be used to document my Java learning journey.
 6. [Operators and Strings](Notes/Operators.md)
 7. [Data Structures](Notes/DataStructures.md)
     1. [Array](Notes/DataStructures.md/#array)
+    2. [Set, HashSet, TreeSet](Notes/DataStructures2.md/#set)
 
 # Exercises
 
