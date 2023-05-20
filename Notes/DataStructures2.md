@@ -229,7 +229,95 @@ Differences between HashSet and TreeSet in Java.
 
 ## Priority Queue
 
+A PriorityQueue is used when the objects are supposed to be processed based on the priority. It is known that a Queue follows the First-In-First-Out algorithm, but sometimes the elements of the queue are needed to be processed according to the priority, that’s when the PriorityQueue comes into play.
 
+The PriorityQueue is based on the priority heap. The elements of the priority queue are ordered according to the natural ordering, or by a Comparator provided at queue construction time, depending on which constructor is used.  
+
+![Queue implementations](../Media/Queue-Deque-PriorityQueue-In-Java.png)
+
+
+A few important points on Priority Queue are as follows: 
+
+- PriorityQueue doesn’t permit null.
+- We can’t create a PriorityQueue of Objects that are non-comparable
+- PriorityQueue are unbound queues.
+- The head of this queue is the least element with respect to the specified ordering. If multiple elements are tied for the least value, the head is one of those elements — ties are broken arbitrarily.
+- Since PriorityQueue is not thread-safe, java provides PriorityBlockingQueue class that implements the BlockingQueue interface to use in a java multithreading environment.
+- The queue retrieval operations poll,  remove,  peek, and element access the element at the head of the queue.
+- It provides O(log(n)) time for add and poll methods.
+-It inherits methods from AbstractQueue, AbstractCollection, Collection, and Object class.
+
+
+
+### Custom ordering
+
+
+```java
+// Java program to demonstrate working of
+// comparator based priority queue constructor
+import java.util.*;
+
+public class Example {
+	public static void main(String[] args){
+		Scanner in = new Scanner(System.in);
+		// Creating Priority queue constructor having
+		// initial capacity=5 and a StudentComparator instance
+		// as its parameters
+		PriorityQueue<Student> pq = new
+			PriorityQueue<Student>(5, new StudentComparator());
+				
+				// Invoking a parameterized Student constructor with
+				// name and cgpa as the elements of queue
+				Student student1 = new Student("Nandini", 3.2);
+				
+				// Adding a student object containing fields
+				// name and cgpa to priority queue
+				pq.add(student1);
+				Student student2 = new Student("Anmol", 3.6);
+						pq.add(student2);		
+				Student student3 = new Student("Palak", 4.0);
+						pq.add(student3);
+				
+				// Printing names of students in priority order,poll()
+				// method is used to access the head element of queue
+				System.out.println("Students served in their priority order");
+				
+				while (!pq.isEmpty()) {
+				System.out.println(pq.poll().getName());
+		}
+	}
+}
+
+class StudentComparator implements Comparator<Student>{
+			
+			// Overriding compare()method of Comparator
+						// for descending order of cgpa
+			public int compare(Student s1, Student s2) {
+				if (s1.cgpa < s2.cgpa)
+					return 1;
+				else if (s1.cgpa > s2.cgpa)
+					return -1;
+								return 0;
+				}
+		}
+
+class Student {
+	public String name;
+	public double cgpa;
+		
+	// A parameterized student constructor
+	public Student(String name, double cgpa) {
+	
+		this.name = name;
+		this.cgpa = cgpa;
+	}
+	
+	public String getName() {
+		return name;
+	}
+}
+
+```
 
 
 # References
