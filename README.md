@@ -17,6 +17,7 @@ This repository will be used to document my Java learning journey.
 7. [Data Structures](Notes/DataStructures.md)
     1. [Array](Notes/DataStructures.md/#array)
     2. [Set, HashSet, TreeSet](Notes/DataStructures2.md)
+    3. [Tree](Notes/DataStructures3.md)
 
 # Exercises
 
