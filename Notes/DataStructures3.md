@@ -148,6 +148,201 @@ class BinaryTree {
 ```
 
 
+# Binary Search Tree
+
+What is Binary Search Tree?
+
+A Binary Search Tree is a special type of binary tree data structure which has the following properties:  
+
+The left subtree of a node contains only nodes with keys lesser than the node’s key.
+The right subtree of a node contains only nodes with keys greater than the node’s key.
+The left and right subtree each must also be a binary search tree.
+There must be no duplicate nodes.
+
+The above properties of the Binary Search Tree provide an ordering among keys so that the operations like search, minimum and maximum can be done fast. If there is no order, then we may have to compare every key to search for a given key.
+
+## How to search for a key in a given Binary Tree?
+
+For searching a value, if we had a sorted array we could have performed a **binary search**.
+
+
+Search operations in binary search trees will be very similar to that. Let’s say we want to search for the number X. 
+
+- We start at the root, and then we compare the value to be searched with the value of the root, 
+	- If it’s equal we are done with the search if it’s smaller we know that we need to go to the left subtree because in a binary search tree all the elements in the left subtree are smaller and all the elements in the right subtree are larger. 
+	- Searching an element in the binary search tree is basically this traversal, at each step we go either left or right and at each step we discard one of the sub-trees. 
+
+
+If the tree is balanced, (we call a tree balanced if for all nodes the difference between the heights of left and right subtrees is not greater than one) we start with a search space of ‘n’ nodes and as we discard one of the sub-trees, we discard ‘n/2’ nodes so our search space gets reduced to ‘n/2’.
+
+In the next step, we reduce the search space to ‘n/4’ and we repeat until we find the element or our search space is reduced to only one node. The search here is also a binary search hence the name; Binary Search Tree.
+
+
+
+### BST Example
+
+Consider the graph shown below and the key = 6.
+
+![Binary Search Tree](../Media//bstex.png)
+
+
+- Initially compare the key with the root i.e., 8. As 6 is less than 8, search in the left subtree of 8.
+- Now compare the key with 3. As key is greater than 3, search next in the right subtree of 3.
+- Now compare the key with 6. The value of the key is 6. So we have found the key. 
+
+
+```java
+// A utility function to search a given key in BST
+public Node search(Node root, int key)
+{
+	// Base Cases: root is null or key is present at root
+	if (root == null || root.key == key)
+		return root;
+
+	// Key is greater than root's key
+	if (root.key < key)
+		return search(root.right, key);
+
+	// Key is smaller than root's key
+	return search(root.left, key);
+}
+
+```
+
+```
+Time complexity: O(h), where h is the height of the BST.
+
+Space complexity: O(h), where h is the height of the BST. This is because the maximum amount of space needed to store the recursion stack would be h.
+```
+
+
+## How to insert a value in BST?
+The insertion logic into BST is similar to its searching operation. A new value is always inserted at the leaf node of the BST.
+
+Compare the value with the root of the BST.
+
+If the value to be inserted is less than the root, move to the left subtree. 
+
+Otherwise, if the value is greater than the root, move to the right subtree.
+
+Continue this process, until we hit a leaf node.
+
+If the value is less than the leaf, create a left child of the leaf and insert the value.
+
+Otherwise, if the value is greater than the leaf, create a right child of the leaf and insert the value in the right child.
+
+
+Consider the following BST and the value = 40 to be added.
+
+![bstinsert1](../Media/bstinsert1.png)
+
+- Initially, 40 is less than 100. So move to the left subtree.
+- Now, 40 is greater than 20. So move to the right subtree.
+- Now we reach the leaf node 30. As 40 is greater than 30, create right child of 30 and insert the value 40.
+
+
+![bstinsertres](../Media/bstinsertres.png)
+
+
+```java
+// Java program to demonstrate insert operation
+// in binary search tree
+
+import java.io.*;
+
+public class BinarySearchTree {
+
+	// Class containing left and right child of
+	// current node and key value
+	class Node {
+		int key;
+		Node left, right;
+
+		public Node(int item)
+		{
+			key = item;
+			left = right = null;
+		}
+	}
+
+	// Root of BST
+	Node root;
+
+	// Constructor
+	BinarySearchTree() { root = null; }
+
+	BinarySearchTree(int value) { root = new Node(value); }
+
+	// This method mainly calls insertRec()
+	void insert(int key) { root = insertRec(root, key); }
+
+	// A recursive function to
+	// insert a new key in BST
+	Node insertRec(Node root, int key)
+	{
+		// If the tree is empty return a new node
+		if (root == null) {
+			root = new Node(key);
+			return root;
+		}
+
+		// Otherwise, recur down the tree
+		if (key < root.key)
+			root.left = insertRec(root.left, key);
+		else if (key > root.key)
+			root.right = insertRec(root.right, key);
+
+		// return the (unchanged) node pointer
+		return root;
+	}
+
+	// This method mainly calls InorderRec()
+	void inorder() { inorderRec(root); }
+
+	// A utility function to do inorder traversal of BST
+	void inorderRec(Node root)
+	{
+		if (root != null) {
+			inorderRec(root.left);
+			System.out.print(root.key + " ");
+			inorderRec(root.right);
+		}
+	}
+
+	// Driver Code
+	public static void main(String[] args)
+	{
+		BinarySearchTree tree = new BinarySearchTree();
+		tree.insert(50);
+		tree.insert(30);
+		tree.insert(20);
+		tree.insert(40);
+		tree.insert(70);
+		tree.insert(60);
+		tree.insert(80);
+
+		// Print inorder traversal of the BST
+		tree.inorder();
+	}
+}
+// This code is contributed by Ankur Narain Verma
+
+```
+
+Output
+```
+20 30 40 50 60 70 80 
+```
+Time Complexity: 
+
+O(h) where h is the height of the Binary Search Tree. In the worst case, we may have to travel from the root to the deepest leaf node.
+
+The height of a skewed tree may become n and the time complexity of the search and insert operation may become O(n). 
+
+Auxiliary Space: O(1)
+
+
+
 # Reference
 
 https://www.geeksforgeeks.org/introduction-to-binary-tree-data-structure-and-algorithm-tutorials/
