@@ -543,12 +543,12 @@ In the case of detecting a cycle in an undirected graph using DFS, the time comp
 Overall, it is important to consider both the time and space complexity of an algorithm when evaluating its performance, as they both have an impact on the efficiency and scalability of the algorithm.
 
 
-## Acyclic graph
+<!--## Acyclic graph
 
 
 ###  DAG (Directed Acyclic graph)
 
-
+-->
 
 
 # Reference
