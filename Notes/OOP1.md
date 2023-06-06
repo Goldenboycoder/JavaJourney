@@ -272,7 +272,101 @@ btn.setOnAction(new EventHandler()
 ```
 
 
+## Instantiation and the life cycle of an object
+
+Already discussed previously [Instance variables and Memory Lifecycle](./Variables.md)
+
+
+## Declaring Classes
+You've seen classes defined in the following way:
+```
+class MyClass {
+    // field, constructor, and 
+    // method declarations
+}
+```
+
+
+This is a class declaration. The class body (the area between the braces) contains all the code that provides for the life cycle of the objects created from the class: constructors for initializing new objects, declarations for the fields that provide the state of the class and its objects, and methods to implement the behavior of the class and its objects.
+
+The preceding class declaration is a minimal one. It contains only those components of a class declaration that are required. You can provide more information about the class, such as the name of its superclass, whether it implements any interfaces, and so on, at the start of the class declaration. For example,
+```
+class MyClass extends MySuperClass implements YourInterface {
+    // field, constructor, and
+    // method declarations
+}
+```
+
+means that MyClass is a subclass of MySuperClass and that it implements the YourInterface interface.
+
+You can also add modifiers like public or private at the very beginning—so you can see that the opening line of a class declaration can become quite complicated. The modifiers public and private, which determine what other classes can access MyClass, are discussed later in this lesson. The lesson on interfaces and inheritance will explain how and why you would use the extends and implements keywords in a class declaration. For the moment you do not need to worry about these extra complications.
+
+In general, class declarations can include these components, in order:
+
+- Modifiers such as public, private, and a number of others that you will encounter later. (However, note that the private modifier can only be applied to Nested Classes.)
+- The class name, with the initial letter capitalized by convention.
+- The name of the class's parent (superclass), if any, preceded by the keyword extends. A class can only extend (subclass) one parent.
+- A comma-separated list of interfaces implemented by the class, if any, preceded by the keyword implements. A class can implement more than one interface.
+- The class body, surrounded by braces, `{}`.
+
+
+Now implementing a class comes down to filling the body with functionality while adhering tot he signature of the methods provided by the interface or the methods signature them selfs when no interface is provided , more on interfaces later.
+
+
+# Access Modifiers
+
+Access modifiers are object-oriented programming that is used to set the accessibility of classes, constructors, methods, and other members of Java.
+Using the access modifiers we can set the scope or accessibility of these classes, methods, constructors, and other members. 
+
+
+### Four Types of Access Modifiers
+
+- **Private** : We can access the private modifier only within the same class and not from outside the class.
+- **Default** : We can access the default modifier only within the same package and not from outside the package. And also, **if we do not specify any access modifier it will automatically consider it as default**.
+- **Protected** : We can access the protected modifier within the same package and also from outside the package with the help of the child class. If we do not make the child class, we cannot access it from outside the package. **So inheritance is a must for accessing it from outside the package.**
+- **Public** : We can access the public modifier from anywhere. We can access public modifiers from within the class as well as from outside the class and also within the package and outside the package.
+
+
+
+### Which all members of Java can be assigned with the access modifiers
+
+
+
+|Members of JAVA|	Private|	Default|	Protected|	Public
+|:---|:---|:---|:---|:---|
+Class	|No	|Yes	|No	|Yes
+Variable|	Yes	|Yes|	Yes|	Yes
+Method	|Yes	|Yes	|Yes	|Yes
+Constructor	|Yes	|Yes	|Yes	|Yes
+interface	|No	|Yes	|No	|Yes
+Initializer Block|	NOT ALLOWED|||
+
+
+### Scope of each Access Modifier
+
+
+|  | Accessibility	|Private	|Default	|Protected	|Public
+|:---|:---|:---|:---|:---|:---|
+Same Package|	Same Class|	Yes|	Yes|	Yes|	Yes
+Without Inheritance|	No|	Yes|	Yes	|Yes
+With Inheritance|	No|	Yes|	Yes|	Yes
+Different Package|	Without Inheritance|	No|	No	|No|	Yes
+With Inheritance|	No|	No	|Yes	|Yes
+
+
+
+
+
+
+
 # References
 
 https://www.geeksforgeeks.org/classes-objects-java/
 
+https://docs.oracle.com/javase/tutorial/java/javaOO/classdecl.html
+
+https://docs.oracle.com/javase/tutorial/java/IandI/usinginterface.html
+
+https://www.mygreatlearning.com/blog/the-access-modifiers-in-java/
+
+https://www.geeksforgeeks.org/access-modifiers-java/
