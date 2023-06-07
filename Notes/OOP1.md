@@ -354,6 +354,202 @@ Different Package|	Without Inheritance|	No|	No	|No|	Yes
 With Inheritance|	No|	No	|Yes	|Yes
 
 
+## Data Members
+
+
+
+Member variables are known as instance variables in java.
+
+- Instance variables are declared in a class, but outside a method, constructor or any block.
+
+- When space is allocated for an object in the heap, a slot for each instance variable value is created.
+
+- Instance variables are created when an object is created with the use of the keyword 'new' and destroyed when the object is destroyed.
+
+- Instance variables hold values that must be referenced by more than one method, constructor or block, or essential parts of an object's state that must be present throughout the class.
+
+- Instance variables can be declared in a class level before or after use.
+
+- Access modifiers can be given for instance variables.
+
+- The instance variables are visible for all methods, constructors, and block in the class. Normally, it is recommended to make these variables private (access level). However, visibility for subclasses can be given for these variables with the use of access modifiers.
+
+- Instance variables have default values. For numbers, the default value is 0, for Booleans it is false, and for object references it is null. Values can be assigned during the declaration or within the constructor.
+
+- Instance variables can be accessed directly by calling the variable name inside the class. However, within static methods (when instance variables are given accessibility), they should be called using the fully qualified name. ObjectReference.VariableName.
+
+
+
+## Constructors 
+
+Java constructors or constructors in Java is a terminology used to construct something in our programs. A constructor in Java is a special method that is used to initialize objects. The constructor is called when an object of a class is created. It can be used to set initial values for object attributes.
+
+### What are Constructors in Java?
+
+In Java, Constructor is a block of codes similar to the method. It is called when an instance of the class is created. At the time of calling the constructor, memory for the object is allocated in the memory. It is a special type of method that is used to initialize the object. Every time an object is created using the new() keyword, at least one constructor is called.
+
+**Note**: It is not necessary to write a constructor for a class. It is because the java compiler creates a default constructor (constructor with no arguments) if your class doesn’t have any.
+
+
+Each time an object is created using a new() keyword, at least one constructor (it could be the default constructor) is invoked to assign initial values to the data members of the same class. Rules for writing constructors are as follows:
+
+- The constructor(s) of a class must have the same name as the class name in which it resides.
+- A constructor in Java can not be abstract, final, static, or Synchronized.
+- Access modifiers can be used in constructor declaration to control its access i.e which other class can call the constructor.
+
+### Types of constructors in java
+
+Now is the correct time to discuss the types of the constructor, so primarily there are three types of constructors in Java are mentioned below:
+
+- Default Constructor
+- Parameterized Constructor
+- Copy Constructor
+
+
+### Default Constructor in Java
+
+A constructor that has no parameters is known as default the constructor. A default constructor is invisible. And if we write a constructor with no arguments, the compiler does not create a default constructor. It is taken out. It is being overloaded and called a parameterized constructor. The default constructor changed into the parameterized constructor. But Parameterized constructor can’t change the default constructor.
+
+### Parameterized Constructor in Java
+
+A constructor that has parameters is known as parameterized constructor. If we want to initialize fields of the class with our own values, then use a parameterized constructor.
+
+```java
+// Java Program for Parameterized Constructor
+import java.io.*;
+class Geek {
+	// data members of the class.
+	String name;
+	int id;
+	Geek(String name, int id)
+	{
+		this.name = name;
+		this.id = id;
+	}
+}
+class GFG {
+	public static void main(String[] args)
+	{
+		// This would invoke the parameterized constructor.
+		Geek geek1 = new Geek("avinash", 68);
+		System.out.println("GeekName :" + geek1.name
+						+ " and GeekId :" + geek1.id);
+	}
+}
+
+```
+
+Now the most important topic that comes into play is the strong incorporation of OOPS with constructors known as constructor overloading. Just like methods, we can overload constructors for creating objects in different ways. 
+
+The compiler differentiates constructors on the basis of the number of parameters, types of parameters, and order of the parameters. 
+
+
+
+```java
+// Java Program to illustrate constructor overloading
+// using same task (addition operation ) for different
+// types of arguments.
+
+import java.io.*;
+
+class Geek {
+	// constructor with one argument
+	Geek(String name)
+	{
+		System.out.println("Constructor with one "
+						+ "argument - String : " + name);
+	}
+
+	// constructor with two arguments
+	Geek(String name, int age)
+	{
+
+		System.out.println(
+			"Constructor with two arguments : "
+			+ " String and Integer : " + name + " " + age);
+	}
+
+	// Constructor with one argument but with different
+	// type than previous..
+	Geek(long id)
+	{
+		System.out.println(
+			"Constructor with one argument : "
+			+ "Long : " + id);
+	}
+}
+
+class GFG {
+	public static void main(String[] args)
+	{
+		// Creating the objects of the class named 'Geek'
+		// by passing different arguments
+
+		// Invoke the constructor with one argument of
+		// type 'String'.
+		Geek geek2 = new Geek("Shikhar");
+
+		// Invoke the constructor with two arguments
+		Geek geek3 = new Geek("Dharmesh", 26);
+
+		// Invoke the constructor with one argument of
+		// type 'Long'.
+		Geek geek4 = new Geek(325614567);
+	}
+}
+
+```
+
+
+### Copy Constructor in Java
+
+Unlike other constructors copy constructor is passed with another object which copies the data available from the passed object to the newly created object.
+
+```java
+// Java Program for Copy Constructor
+import java.io.*;
+
+class Geek {
+	// data members of the class.
+	String name;
+	int id;
+
+	// Parameterized Constructor
+	Geek(String name, int id)
+	{
+		this.name = name;
+		this.id = id;
+	}
+
+	// Copy Constructor
+	Geek(Geek obj2)
+	{
+		this.name = obj2.name;
+		this.id = obj2.id;
+	}
+}
+class GFG {
+	public static void main(String[] args)
+	{
+		// This would invoke the parameterized constructor.
+		System.out.println("First Object");
+		Geek geek1 = new Geek("avinash", 68);
+		System.out.println("GeekName :" + geek1.name
+						+ " and GeekId :" + geek1.id);
+
+		System.out.println();
+
+		// This would invoke the copy constructor.
+		Geek geek2 = new Geek(geek1);
+		System.out.println(
+			"Copy Constructor used Second Object");
+		System.out.println("GeekName :" + geek2.name
+						+ " and GeekId :" + geek2.id);
+	}
+}
+```
+
+## Nested Class
 
 
 
@@ -370,3 +566,7 @@ https://docs.oracle.com/javase/tutorial/java/IandI/usinginterface.html
 https://www.mygreatlearning.com/blog/the-access-modifiers-in-java/
 
 https://www.geeksforgeeks.org/access-modifiers-java/
+
+https://www.geeksforgeeks.org/constructors-in-java/
+
+https://www.geeksforgeeks.org/nested-classes-java/
