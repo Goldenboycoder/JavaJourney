@@ -552,6 +552,365 @@ class GFG {
 ## Nested Class
 
 
+In Java, it is possible to define a class within another class, such classes are known as nested classes. They enable you to logically group classes that are only used in one place, thus this increases the use of encapsulation, and creates more readable and maintainable code.
+
+- The scope of a nested class is bounded by the scope of its enclosing class. Thus in below example, class NestedClass does not exist independently of class OuterClass.
+- A nested class has access to the members, including private members, of the class in which it is nested. But the enclosing class does not have access to the member of the nested class.
+- A nested class is also a member of its enclosing class.
+- As a member of its enclosing class, a nested class can be declared private, public, protected, or package private(default).
+- Nested classes are divided into two categories:
+	- static nested class : Nested classes that are declared static are called static nested classes.
+	- inner class : An inner class is a non-static nested class.
+
+
+```
+class OuterClass
+{
+...
+    class NestedClass
+    {
+        ...
+    }
+}
+```
+
+
+### Static Nested Class
+
+In the case of normal or regular inner classes, without an outer class object existing, there cannot be an inner class object. 
+
+i.e., an object of the inner class is always strongly associated with an outer class object. But in the case of static nested class, Without an outer class object existing, there may be a static nested class object. i.e., an object of a static nested class is not strongly associated with the outer class object.
+
+As with class methods and variables, a static nested class is associated with its outer class. And like static class methods, a static nested class cannot refer directly to instance variables or methods defined in its enclosing class: it can use them only through an object reference.They are accessed using the enclosing class name.
+
+```
+OuterClass.StaticNestedClass
+```
+
+For example, to create an object for the static nested class, use this syntax:
+```java
+OuterClass.StaticNestedClass nestedObject =
+     new OuterClass.StaticNestedClass();
+```
+
+
+```java
+// Java program to demonstrate accessing
+// a static nested class
+
+// outer class
+class OuterClass {
+	// static member
+	static int outer_x = 10;
+
+	// instance(non-static) member
+	int outer_y = 20;
+
+	// private member
+	private static int outer_private = 30;
+
+	// static nested class
+	static class StaticNestedClass {
+		void display()
+		{
+			// can access static member of outer class
+			System.out.println("outer_x = " + outer_x);
+
+			// can access private static member of
+			// outer class
+			System.out.println("outer_private = "
+							+ outer_private);
+
+			// The following statement will give compilation
+			// error as static nested class cannot directly
+			// access non-static members
+			// System.out.println("outer_y = " + outer_y);
+		
+			// Therefore create object of the outer class
+			// to access the non-static member
+			OuterClass out = new OuterClass();
+			System.out.println("outer_y = " + out.outer_y);
+		
+		
+		}
+	}
+}
+
+// Driver class
+public class StaticNestedClassDemo {
+	public static void main(String[] args)
+	{
+		// accessing a static nested class
+		OuterClass.StaticNestedClass nestedObject
+			= new OuterClass.StaticNestedClass();
+
+		nestedObject.display();
+	}
+}
+
+```
+
+Output:
+```
+outer_x = 10
+outer_private = 30
+outer_y = 20
+```
+
+### Inner classes
+
+To instantiate an inner class, you must first instantiate the outer class. Then, create the inner object within the outer object with this syntax:
+
+```
+OuterClass.InnerClass innerObject = outerObject.new InnerClass();
+```
+
+There are two special kinds of inner classes :
+
+1. Local inner classes
+2. Anonymous inner classes
+
+
+#### Local inner classes
+
+Local Inner Classes are the inner classes that are defined inside a block. Generally, this block is a method body. Sometimes this block can be a for loop or an if clause. Local Inner classes are not a member of any enclosing classes. They belong to the block they are defined within, due to which local inner classes cannot have any access modifiers associated with them. However, they can be marked as final or abstract. This class has access to the fields of the class enclosing it. Local inner class must be instantiated in the block they are defined in. 
+
+Rules of Local Inner Class:
+
+- The scope of the local inner class is restricted to the block they are defined in.
+- A local inner class cannot be instantiated from outside the block where it is created in.
+- Till JDK 7, the Local inner class can access only the final local variable of the enclosing block. However, From JDK 8, it is possible to access the non-final local variable of enclosing block in the local inner class.
+- A local class has access to the members of its enclosing class.
+Local inner classes can extend an abstract class or implement an interface. 
+
+
+**Declaring a Local Inner class**: A local inner class can be declared within a block. This block can be either a method body, initialization block, for loop, or even an if statement. 
+
+**Accessing Members**: A local inner class has access to fields of the class enclosing it as well as the fields of the block that it is defined within. These classes, however, can access the variables or parameters of the block that encloses it only if they are declared as final or are effectively final. A variable whose value is not changed once initialized is called an effectively final variable. A local inner class defined inside a method body has access to its parameters. 
+
+
+#### What happens at compile time?
+
+When a program containing a local inner class is compiled, the compiler generates two .class files, one for the outer class and the other for the inner class that has the reference to the outer class. The two files are named by the compiler as: 
+
+- Outer.class
+- Outer$1Inner.class
+
+#### Declaration within a method body
+
+
+```java
+// Java program to illustrate
+// working of local inner classes
+
+public class Outer
+{
+	private void getValue()
+	{
+		// Note that local variable(sum) must be final till JDK 7
+		// hence this code will work only in JDK 8
+		int sum = 20;
+		
+		// Local inner Class inside method
+		class Inner
+		{
+			public int divisor;
+			public int remainder;
+			
+			public Inner()
+			{
+				divisor = 4;
+				remainder = sum%divisor;
+			}
+			private int getDivisor()
+			{
+				return divisor;
+			}
+			private int getRemainder()
+			{
+				return sum%divisor;
+			}
+			private int getQuotient()
+			{
+				System.out.println("Inside inner class");
+				return sum / divisor;
+			}
+		}
+		
+		Inner inner = new Inner();
+		System.out.println("Divisor = "+ inner.getDivisor());
+		System.out.println("Remainder = " + inner.getRemainder());
+		System.out.println("Quotient = " + inner.getQuotient());
+	}
+	
+	public static void main(String[] args)
+	{
+		Outer outer = new Outer();
+		outer.getValue();
+	}
+}
+
+```
+
+
+Output
+```
+Divisor = 4
+Remainder = 0
+Inside inner class
+Quotient = 5
+```
+Note: A local class can access local variables and parameters of the enclosing block that are effectively final. 
+
+
+For example, if you add the highlighted assignment statement in the Inner class constructor or any method of Inner class in the above example: 
+```
+public Inner()
+{
+   sum = 50; // <==
+   divisor = 4;
+   remainder = sum%divisor;
+}
+```
+Because of this assignment statement, the variable sum is not effectively final anymore. As a result, the Java compiler generates an error message similar to “local variables referenced from an inner class must be final or effectively final.”
+
+
+#### Declaration inside an if statement
+
+```java
+// Java program to illustrate Declaration of
+// local inner classes inside an if statement
+
+public class Outer
+{
+	public int data = 10;
+	public int getData()
+	{
+		return data;
+	}
+	public static void main(String[] args)
+	{
+		Outer outer = new Outer();
+		
+		if(outer.getData() < 20)
+		{
+			// Local inner class inside if clause
+			class Inner
+			{
+				public int getValue()
+				{
+					System.out.println("Inside Inner class");
+					return outer.data;
+				}
+			}
+
+			Inner inner = new Inner();
+			System.out.println(inner.getValue());
+		}
+		else
+		{
+			System.out.println("Inside Outer class");
+		}
+	}
+}
+
+```
+
+### Anonymous Inner Class in Java
+
+Nested Classes in Java is prerequisite required before adhering forward to grasp about anonymous Inner class. It is an inner class without a name and for which only a single object is created. 
+
+An anonymous inner class can be useful when making an instance of an object with certain “extras” such as overriding methods of a class or interface, without having to actually subclass a class.
+
+The syntax of an anonymous class expression is like the invocation of a constructor, except that there is a class definition contained in a block of code. 
+
+```
+// Test can be interface,abstract/concrete class
+Test t = new Test() 
+{
+   // data members and methods
+   public void test_method() 
+   {
+      ........
+      ........
+    }   
+};
+```
+
+Now let us do discuss the difference between regular class(normal classes) and Anonymous Inner class
+
+- A normal class can implement any number of interfaces but the anonymous inner class can implement only one interface at a time.
+- A regular class can extend a class and implement any number of interfaces simultaneously. But anonymous Inner class can extend a class or can implement an interface but not both at a time.
+- For regular/normal class, we can write any number of constructors but we can’t write any constructor for anonymous Inner class because the anonymous class does not have any name and while defining constructor class name and constructor name must be same.
+
+
+
+
+
+#### Accessing Local Variables of the Enclosing Scope, and Declaring and Accessing Members of the Anonymous Class 
+
+Like local classes, anonymous classes can capture variables; they have the same access to local variables of the enclosing scope:  
+
+- An anonymous class has access to the members of its enclosing class.
+- An anonymous class cannot access local variables in its enclosing scope that are not declared as final or effectively final.
+- Like a nested class, a declaration of a type (such as a variable) in anonymous class shadows any other declarations in the enclosing scope that have the same name.
+
+Anonymous classes also have the same restrictions as local classes with respect to their members: 
+
+- We cannot declare static initializers or member interfaces in an anonymous class.
+- An anonymous class can have static members provided that they are constant variables.
+
+**Note**: We can declare the following in anonymous classes as follows:
+
+- Fields
+- Extra methods (even if they do not implement any methods of the supertype)
+- Instance initializers
+- Local classes
+
+```java
+// Java Program to Demonstrate Anonymous inner class
+
+// Interface
+interface Age {
+	int x = 21;
+	void getAge();
+}
+
+// Main class
+class AnonymousDemo {
+
+	// Main driver method
+	public static void main(String[] args)
+	{
+
+		// Myclass is hidden inner class of Age interface
+		// whose name is not written but an object to it
+		// is created.
+		Age oj1 = new Age() {
+		
+			@Override public void getAge()
+			{
+				// printing age
+				System.out.print("Age is " + x);
+			}
+		};
+	
+		oj1.getAge();
+	}
+}
+
+```
+
+
+
+### Comparison between normal or regular class and static nested class
+|Normal/Regular inner class|Static nested class|
+|:--|:--|
+|Without an outer class object existing, there cannot be an inner class object. That is, the inner class object is always associated with the outer class object. |Without an outer class object existing, there may be a static nested class object. That is, static nested class object is not associated with the outer class object. |
+| Inside normal/regular inner class, static members can’t be declared.|Inside static nested class, static members can be declared. |
+| As main() method can’t be declared, regular inner class can’t be invoked directly from the command prompt.|As main() method can be declared, the static nested class can be invoked directly from the command prompt. |
+| Both static and non static members of outer class can be accessed directly.|Only a static member of outer class can be accessed directly. |
+
 
 
 
@@ -570,3 +929,5 @@ https://www.geeksforgeeks.org/access-modifiers-java/
 https://www.geeksforgeeks.org/constructors-in-java/
 
 https://www.geeksforgeeks.org/nested-classes-java/
+
+https://www.geeksforgeeks.org/anonymous-inner-class-java/
