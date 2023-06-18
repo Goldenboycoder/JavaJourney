@@ -914,6 +914,186 @@ class AnonymousDemo {
 
 
 
+# Accessor and Mutator
+
+A method for accessing the value of a (potentially private) instance variable is called an accessor method, and a method for changing the value of a (potentially private) instance variable is called a mutator method. 
+
+Often the examples give the accessor methods the name `getVariableName()` and the mutator methods the name `setVariableName()`. Where "VariableName" is the name of the (potentially private) instance variable. Therefore, mutators are often also called setters, and accessors are often called getters.
+
+
+
+```java
+public IDCard(String name, int ID, String filename)
+{
+    mName = name;
+    mID = ID;
+    mFileName = filename;
+}
+
+public String getName()
+{
+    return mName;
+}
+
+public void setName( String name )
+{
+    mName = name;
+}
+
+...
+```
+
+# Static Variable, Method
+
+When a variable is declared static in Java programming, it means that the variable belongs to the class itself rather than to any specific instance of the class. 
+
+This means that there is only one copy of the variable in memory, regardless of how many instances of the class are created.
+
+Here's an example. Say we have a Department class that has a static variable called numberOfWorker. We declare and increment the static variable at the constructor level to show the value of the static variable whenever the class object is created.
+
+```java
+public class Department{
+    public static int numberOfWorker= 0;
+    public String name;
+    
+    public Department(String name) {
+        this.name = name;
+        numberOfWorker++; // increment the static variable every time a new 							//Person is created
+    }
+}
+```
+
+
+The results of the above code show that as we create new Department objects, the static variable numberOfWorker retains its value.
+
+When we print out the value of numberOfWorker in the console, we can see that it retains its value across all instances of the Department class. This is because there is only one copy of the variable in memory, and any changes to the variable will be reflected across all instances of the class.
+```java
+Department dpt1 = new Department("Admin");
+System.out.println(Department.numberOfWorker); // output: 1
+
+Department dpt2 = new Department ("Finance");
+System.out.println(Department.numberOfWorker); // output: 2
+
+Department dpt3 = new Department ("Software");
+System.out.println(Department.numberOfWorker); // output: 3
+```
+
+We can also use the static keyword to define static methods.
+
+Static methods are methods that belong to the class rather than to any specific instance of the class. Static methods can be called directly on the class itself without needing to create an instance of the class first. See the code below:
+
+```java
+public class Calculation{
+    public static int add(int a, int b) {
+        return a + b;
+    }
+
+    public static int multiply(int a, int b) {
+        return a * b;
+    }
+}
+```
+
+In the above code, the Calculation class has two static methods. The declared static methods can be called directly on the Calculation class without creating an instance of the class first. That is to say, you do not need to create an object of the Calculation class before you access the static add and multiply classes.
+
+```java
+int result = Calculation.add(5, 10);
+System.out.println(result); // Output: 15
+
+int result2 = Calculation.multiply(5, 10);
+System.out.println(result2); // Output: 50
+```
+
+# Final Keyword
+
+Characteristics of final keyword in java:
+In Java, the final keyword is used to indicate that a variable, method, or class cannot be modified or extended. Here are some of its characteristics:
+
+
+- Final variables: When a variable is declared as final, its value cannot be changed once it has been initialized. This is useful for declaring constants or other values that should not be modified.
+- Final methods: When a method is declared as final, it cannot be overridden by a subclass. This is useful for methods that are part of a class’s public API and should not be modified by subclasses.
+- Final classes: When a class is declared as final, it cannot be extended by a subclass. This is useful for classes that are intended to be used as is and should not be modified or extended.
+- Initialization: Final variables must be initialized either at the time of declaration or in the constructor of the class. This ensures that the value of the variable is set and cannot be changed.
+- Performance: The use of final can sometimes improve performance, as the compiler can optimize the code more effectively when it knows that a variable or method cannot be changed.
+- Security: final can help improve security by preventing malicious code from modifying sensitive data or behavior.
+
+
+Overall, the final keyword is a useful tool for improving code quality and ensuring that certain aspects of a program cannot be modified or extended. By declaring variables, methods, and classes as final, developers can write more secure, robust, and maintainable code. 
+
+
+
+# Enum
+
+In Java, Enumerations or Java Enum serve the purpose of representing a group of named constants in a programming language. Java Enums are used when we know all possible values at compile time, such as choices on a menu, rounding modes, command-line flags, etc. 
+
+The set of constants in an enum type doesn’t need to stay fixed for all time.
+
+A Java enumeration is a class type. Although we don’t need to instantiate an enum using new, it has the same capabilities as other classes. This fact makes Java enumeration a very powerful tool. Just like classes, you can give them constructors, add instance variables and methods, and even implement interfaces.
+
+One thing to keep in mind is that, unlike classes, enumerations neither inherit other classes nor can get extended(i.e become superclass).  We can also add variables, methods, and constructors to it. The main objective of an enum is to define our own data types(Enumerated Data Types).
+
+
+## Declaration of enum in Java
+Enum declaration can be done outside a Class or inside a Class but not inside a Method.
+
+1. Declaration outside the class
+
+```java
+// A simple enum example where enum is declared
+// outside any class (Note enum keyword instead of
+// class keyword)
+
+enum Color {
+	RED,
+	GREEN,
+	BLUE;
+}
+
+public class Test {
+	// Driver method
+	public static void main(String[] args)
+	{
+		Color c1 = Color.RED;
+		System.out.println(c1);
+	}
+}
+
+```
+
+2. Declaration inside a class
+
+```java
+// enum declaration inside a class.
+
+public class Test {
+	enum Color {
+		RED,
+		GREEN,
+		BLUE;
+	}
+
+	// Driver method
+	public static void main(String[] args)
+	{
+		Color c1 = Color.RED;
+		System.out.println(c1);
+	}
+}
+
+```
+**N.B**: According to Java naming conventions, it is recommended that we name constant with all capital letters
+
+
+## Properties of Enum in Java
+There are certain properties followed by Enum as mentioned below:
+
+- Every enum is internally implemented by using Class.
+- Every enum constant represents an object of type enum.
+- Enum type can be passed as an argument to switch statements.
+- Every enum constant is always implicitly public static final. Since it is static, we can access it by using the enum Name. Since it is final, we can’t create child enums.
+- We can declare the main() method inside the enum. Hence we can invoke the enum directly from the Command Prompt.
+
+
 # References
 
 https://www.geeksforgeeks.org/classes-objects-java/
@@ -931,3 +1111,12 @@ https://www.geeksforgeeks.org/constructors-in-java/
 https://www.geeksforgeeks.org/nested-classes-java/
 
 https://www.geeksforgeeks.org/anonymous-inner-class-java/
+
+https://www.freecodecamp.org/news/static-variables-in-java/
+
+https://www.geeksforgeeks.org/enum-in-java/
+
+https://www.geeksforgeeks.org/date-class-java-examples/
+
+https://www.tutorialspoint.com/java/java_date_time.htm
+
