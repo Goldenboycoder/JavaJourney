@@ -19,7 +19,7 @@ This repository will be used to document my Java learning journey.
     2. [Set, HashSet, TreeSet](Notes/DataStructures2.md)
     3. [Tree](Notes/DataStructures3.md)
     4. [Graph](Notes/DataStructures4.md)
-8. [Object Oriented Programming](Notes/OOP1.md)
+8. [Object Oriented Programming, Classes and Objects](Notes/OOP1.md)
 # Exercises
 
 ## Table Of Contents
