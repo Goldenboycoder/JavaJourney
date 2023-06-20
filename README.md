@@ -21,6 +21,7 @@ This repository will be used to document my Java learning journey.
     4. [Graph](Notes/DataStructures4.md)
 8. [Object Oriented Programming, Classes and Objects](Notes/OOP1.md)
 9. [Inheritance & Polymorphism](Notes/OOP2.md)
+10. [Abstract Classes and Interfaces](Notes/OOP3.md)
 # Exercises
 
 ## Table Of Contents
