@@ -21,7 +21,7 @@ class Soccer extends Sports{
     }
 }
 
-class Solution{
+class Solution1{
 
     public static void main(String[] args) {
         Sports sports = new Sports();
