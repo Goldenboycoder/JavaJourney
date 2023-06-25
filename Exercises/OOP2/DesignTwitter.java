@@ -4,8 +4,8 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.HashSet;
-//import java.util.LinkedHashSet;
+//import java.util.HashSet;
+import java.util.LinkedHashSet;
 //import java.util.LinkedList;
 import java.util.List;
 //import java.util.Queue;
@@ -20,8 +20,8 @@ class TwitterUser{
 
     public TwitterUser(int userID){
         this._userID = userID;
-        _followeesIds = new HashSet<Integer>();
-        _tweetsIds = new HashSet<Integer>();
+        _followeesIds = new LinkedHashSet<Integer>();
+        _tweetsIds = new LinkedHashSet<Integer>();
     }
 
     public Set<Integer> getFolloweesIds(){
