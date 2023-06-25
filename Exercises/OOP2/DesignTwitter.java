@@ -4,14 +4,15 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
-//import java.util.HashSet;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
+//import java.util.LinkedHashSet;
 //import java.util.LinkedList;
 import java.util.List;
 //import java.util.Queue;
 import java.util.Set;
 //import java.util.Stack;
 import java.util.Iterator;
+import java.util.LinkedList;
 
 class TwitterUser{
     public int _userID;
@@ -20,8 +21,8 @@ class TwitterUser{
 
     public TwitterUser(int userID){
         this._userID = userID;
-        _followeesIds = new LinkedHashSet<Integer>();
-        _tweetsIds = new LinkedHashSet<Integer>();
+        _followeesIds = new HashSet<Integer>();
+        _tweetsIds = new HashSet<Integer>();
     }
 
     public Set<Integer> getFolloweesIds(){
@@ -79,7 +80,7 @@ class Twitter {
 
     public Twitter() {
         _users = new HashMap<Integer, TwitterUser>();
-        _tweets = new ArrayDeque<Tweet>();
+        _tweets = new LinkedList<Tweet>();
     }
     
     private int getNewUserId(){
@@ -129,7 +130,7 @@ class Twitter {
 
         List<Integer> latestUserTweets = new ArrayList<Integer>(maxSize);
 
-        Iterator<Tweet> tweetIterator = _tweets .iterator();
+        Iterator<Tweet> tweetIterator = _tweets.iterator();
         while(tweetIterator.hasNext()){
             Tweet nextTweet = tweetIterator.next();
             TwitterUser user = checkUserExistanceOrCreate(userId);
