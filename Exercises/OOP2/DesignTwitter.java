@@ -4,12 +4,13 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
 import java.util.HashMap;
-import java.util.LinkedHashSet;
+import java.util.HashSet;
+//import java.util.LinkedHashSet;
 //import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
+//import java.util.Queue;
 import java.util.Set;
-import java.util.Stack;
+//import java.util.Stack;
 import java.util.Iterator;
 
 class TwitterUser{
@@ -19,8 +20,8 @@ class TwitterUser{
 
     public TwitterUser(int userID){
         this._userID = userID;
-        _followeesIds = new LinkedHashSet<Integer>();
-        _tweetsIds = new LinkedHashSet<Integer>();
+        _followeesIds = new HashSet<Integer>();
+        _tweetsIds = new HashSet<Integer>();
     }
 
     public Set<Integer> getFolloweesIds(){
@@ -104,7 +105,7 @@ class Twitter {
 
     private void updateUser(TwitterUser user) {
         if(!_users.containsKey(user._userID)){
-            System.out.println(String.format("Twitter User: %d does not exist", user._userID));
+            //System.out.println(String.format("Twitter User: %d does not exist", user._userID));
             //throw new Exception(String.format("Twitter User: %d does not exist", user._userID));
         }
         else{
