@@ -30,3 +30,5 @@ This repository will be used to document my Java learning journey.
 
 1. [LanguageBasics](Exercises/LanguageBasics/)
 2. [Data Structures](Exercises/DataStructures/)
+3. [OOP1](Exercises/OOP1/)
+4. [OOP2](Exercises/OOP2/)
