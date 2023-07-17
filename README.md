@@ -24,6 +24,7 @@ This repository will be used to document my Java learning journey.
 10. [Abstract Classes and Interfaces](Notes/OOP3.md)
 10. [Abstract Classes and Interfaces](Notes/OOP3.md)
 11. [Further OOP Principles](Notes/OOP4.md)
+12. [Algorithms](Notes/Algo1.md)
 # Exercises
 
 ## Table Of Contents
