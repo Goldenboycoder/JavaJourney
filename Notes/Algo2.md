@@ -442,6 +442,73 @@ class GFG {
 
 
 
+## Cyclic Sort Technique
+
+
+Cycle sort is an in-place sorting algorithm. This pattern describes an interesting approach to dealing with problems involving arrays containing numbers in a given range.
+
+- It is optimal in terms of the number of memory writes.
+- It is based on the idea that the array to be sorted can be divided into cycles. Cycles can be visualized as a graph.
+
+**The principal idea:** Given an element a, we can find the index at which it will occur in the sorted list by simply counting the number of elements in the entire list that are smaller than a.
+
+
+
+![cyclic sort](../Media/cyclicsort.png)
+
+
+```javascript
+function cyclicSort(nums) {
+  let i = 0;
+
+  while (i < nums.length) {
+    const j = nums[i] - 1; //nums[i] = 3, 3-1 = 2
+    if (nums[i] !== nums[j]) {
+      //3 !== 2
+      //swap
+      // [nums[i], nums[j]] = [nums[j], nums[i]]
+      let temp = nums[i];
+      nums[i] = nums[j];
+      nums[j] = temp;
+    } else {
+      i++;
+    }
+  }
+  return nums;
+}
+
+cyclicSort([3, 1, 5, 4, 2]);
+cyclicSort([2, 6, 4, 3, 1, 5]);
+cyclicSort([1, 5, 6, 4, 3, 2]);
+```
+
+[3, 1, 5, 4, 2]
+[5, 1, 3, 4, 2]
+[2, 1, 3, 4, 5]
+[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5]
+[1, 2, 3, 4, 5]
+
+
+some variations to it exists like the following problems:
+
+- Find the Missing Number (easy)
+- Find all Missing Numbers (easy)
+- Find the Duplicate Number (easy)
+- Find all Duplicate Numbers (easy)
+- Find the Corrupt Pair (easy)
+- Find the Smallest Missing Positive Number (medium)
+- Find the First K Missing Positive Numbers (hard)
+
+
+
+
+
+
+
+
 # References
 
 https://www.geeksforgeeks.org/brute-force-approach-and-its-pros-and-cons/
@@ -461,4 +528,7 @@ https://www.geeksforgeeks.org/window-sliding-technique/
 https://medium.com/techie-delight/top-problems-on-sliding-window-technique-8e63f1e2b1fa
 
 
+https://medium.com/@luisfernandosalasg/coding-pattern-cyclic-sort-96511b0f60ac
 
+
+https://github.com/Chanda-Abdul/Several-Coding-Patterns-for-Solving-Data-Structures-and-Algorithms-Problems-during-Interviews/blob/main/%E2%9C%85%20%20Pattern%2005%3A%20Cyclic%20Sort.md
