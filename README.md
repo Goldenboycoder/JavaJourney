@@ -22,7 +22,6 @@ This repository will be used to document my Java learning journey.
 8. [Object Oriented Programming, Classes and Objects](Notes/OOP1.md)
 9. [Inheritance & Polymorphism](Notes/OOP2.md)
 10. [Abstract Classes and Interfaces](Notes/OOP3.md)
-10. [Abstract Classes and Interfaces](Notes/OOP3.md)
 11. [Further OOP Principles](Notes/OOP4.md)
 12. [Algorithms](Notes/Algo1.md)
     1. [Techniques](Notes/Algo2.md)
