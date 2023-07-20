@@ -458,6 +458,7 @@ Cycle sort is an in-place sorting algorithm. This pattern describes an interesti
 
 
 ```javascript
+// in JS
 function cyclicSort(nums) {
   let i = 0;
 
@@ -504,7 +505,457 @@ some variations to it exists like the following problems:
 
 
 
+## Subsets Technique
 
+
+> Given a set with distinct elements, find all of its distinct subsets.
+
+To generate all subsets of the given set, we can use the Breadth First Search (BFS) approach. We can start with an empty set, iterate through all numbers one-by-one, and add them to existing sets to create new subsets.
+
+Let’s take the example-2 mentioned above to go through each step of our algorithm:
+
+Given set: `[1, 5, 3]`
+1. Start with an empty set: `[[]]`
+2. Add the first number `1` to all the existing subsets to create new subsets: `[[],`<b>`[1]`</b>`];`
+3. Add the second number `5` to all the existing subsets: `[[], [1], `<b>`[5], [1,5]`</b>`]`;
+4. Add the third number `3` to all the existing subsets: `[[], [1], [5], [1,5], `<b>`[3], [1,3], [5,3], [1,5,3]`</b>`]`.
+
+Since the input set has distinct elements, the above steps will ensure that we will not have any duplicate subsets.
+
+```javascript
+function findSubsets(nums) {
+  const subsets = [];
+  
+  //start by adding the empty subset
+  subsets.push([])
+  
+  for(let i = 0; i < nums.length; i++) {
+    const currentNumber = nums[i]
+    
+    //we will take all existing subsets and insert the current
+    //number in them to create new subsets
+    const n = subsets.length
+
+    //create a new subset from the existing subset and insert
+    //the current element to it
+    for(let j = 0; j < n; j++) {
+      
+      //clone the permutation
+      // const set1 = subsets[j].slice(0)
+      
+      // set1.push(currentNumber)
+      subsets.push([...subsets[j], nums[i]])
+    }
+  }
+
+  return subsets;
+};
+
+
+findSubsets([1, 3])
+findSubsets([1, 5, 3])
+```
+
+- Since, in each step, the number of subsets doubles as we add each element to all the existing subsets, therefore, we will have a total of `O(2ᴺ)` subsets, where `N` is the total number of elements in the input set. And since we construct a new subset from an existing set, therefore, the time complexity of the above algorithm will be `O(N*2ᴺ)`.
+- All the additional space used by our algorithm is for the output list. Since we will have a total of `O(2ᴺ)` subsets, and each subset can take up to `O(N)` space, therefore, the space complexity of our algorithm will be `O(N*2ᴺ)`.
+
+
+Other variations to these problems:
+
+- Subsets With Duplicates (medium)
+- Permutations (medium)
+- String Permutations by changing case (medium)
+- Balanced Parentheses (hard)
+- Unique Generalized Abbreviations (hard)
+- Evaluate Expression (hard)
+- Structurally Unique Binary Search Trees (hard)
+- Count of Structurally Unique Binary Search Trees (hard)
+
+
+
+## Topological Sort
+
+Topological Sort is used to find a linear ordering of elements that have dependencies on each other. For example, if event B is dependent on event A, A comes before B in topological ordering.
+
+> Topological Sort of a directed graph (a graph with unidirectional edges) is a linear ordering of its vertices such that for every directed edge (U, V) from vertex U to vertex V, U comes before V in the ordering. Given a directed graph, find the topological ordering of its vertices.
+
+
+```
+Input: Vertices=4, Edges=[3, 2], [3, 0], [2, 0], [2, 1]
+Output: Following are the two valid topological sorts for the given graph:
+1) 3, 2, 0, 1
+2) 3, 2, 1, 0
+```
+
+
+The basic idea behind the topological sort is to provide a partial ordering among the vertices of the graph such that if there is an edge from `U` to `V` then `U≤V` i.e., `U` comes before `V` in the ordering. 
+
+Here are a few fundamental concepts related to <b>topological sort</b>:
+
+- <b>Source:</b> Any node that has no incoming edge and has only outgoing edges is called a <b>source</b>.
+- <b>Sink:</b> Any node that has only incoming edges and no outgoing edge is called a <b>sink</b>.
+- So, we can say that a topological ordering starts with one of the <b>sources</b> and ends at one of the <b>sinks</b>.
+- A topological ordering is possible only when the graph has no directed <i>cycles</i>, i.e. if the graph is a <b>Directed Acyclic Graph (DAG)</b>. If the graph has a cycle, some vertices will have cyclic dependencies which makes it impossible to find a linear ordering among vertices.
+
+
+
+
+To find the topological sort of a graph we can traverse the graph in a Breadth First Search (BFS) way. We will start with all the sources, and in a stepwise fashion, save all sources to a sorted list. We will then remove all sources and their edges from the graph. After the removal of the edges, we will have new sources, so we will repeat the above process until all vertices are visited.
+
+
+
+1. Initialization
+- We will store the graph in Adjacency Lists, which means each parent vertex will have a list containing all of its children.
+- We will do this using a HashMap where the key will be the parent vertex number and the value will be a List containing children vertices.
+- To find the sources, we will keep a HashMap to count the in-degrees i.e., count of incoming edges of each vertex. Any vertex with 0 in-degree will be a source.
+
+
+
+2. Build the graph and find in-degrees of all vertices
+- We will build the graph from the input and populate the in-degrees HashMap.
+
+
+
+3. Find all sources
+- All vertices with `0` in-degrees will be our sources and we will store them in a Queue.
+
+
+4. Sort
+- For each source, do the following things
+	- Add it to the sorted list.
+	- Get all of its children from the graph.
+	- Decrement the in-degree of each child by `1`.
+	- If a child’s in-degree becomes `0`, add it to the sources **Queue**.
+- Repeat for each source, until the source **Queue** is empty.
+
+
+![topological sort](../Media/topsort4.png)
+
+
+```javascript
+function topologicalSort(vertices, edges) {
+  const sortedOrder = [];
+
+  if (vertices <= 0) {
+    return sortedOrder;
+  }
+
+  //1. Initialize the graph
+  //count incoming edges
+  const inDegree = Array(vertices).fill(0);
+  //adjacency list graph
+  const graph = Array(vertices)
+    .fill(0)
+    .map(() => Array());
+
+  //2. Build the graph
+  edges.forEach((edge) => {
+    let parent = edge[0];
+    let child = edge[1];
+    //put the child into it's parent's list
+    graph[parent].push(child);
+    //increment child's inDegree
+    inDegree[child]++;
+  });
+  
+  //3. Find all sources/vertices with 0 inDegrees
+  const sources = [];
+  for (let i = 0; i < inDegree.length; i++) {
+    if (inDegree[i] === 0) sources.push(i);
+  }
+
+  //4. For each sorce, add it to sortedOrder and decrement it children inDegree
+  //if a child become 0, add to source queue
+  while (sources.length > 0) {
+    const vertex = sources.shift();
+    sortedOrder.push(vertex);
+    graph[vertex].forEach((child) => {
+      //get the nodes children to dcrement thier inDegree
+      inDegree[child]--;
+      if (inDegree[child] === 0) {
+        sources.push(child);
+      }
+    });
+    // console.log(vertex)
+  }
+
+  // topological sort is not possible as the graph has a cycle
+  if (sortedOrder.length !== vertices) {
+    return [];
+  }
+  // console.log(inDegree, graph, sources)
+  return sortedOrder;
+}
+
+console.log(`Topological sort: ${topologicalSort(4, [[3, 2], [3, 0], [2, 0], [2, 1]])}`)
+//Following are the two valid topological sorts for the given graph:
+//1) 3, 2, 0, 1
+//2) 3, 2, 1, 0
+console.log(`Topological sort: ${topologicalSort(5, [[4, 2], [4, 3], [2, 0], [2, 1], [3, 1]])}`)
+//Following are all valid topological sorts for the given graph:
+// 1) 4, 2, 3, 0, 1
+// 2) 4, 3, 2, 0, 1
+// 3) 4, 3, 2, 1, 0
+// 4) 4, 2, 3, 1, 0
+// 5) 4, 2, 0, 3, 1
+
+console.log(`Topological sort: ${topologicalSort(7, [[6, 4],[6, 2],[5, 3],[5, 4],[3, 0],[3, 1],[3, 2],[4, 1],])}`);
+// Following are all valid topological sorts for the given graph:
+// 1) 5, 6, 3, 4, 0, 1, 2
+// 2) 6, 5, 3, 4, 0, 1, 2
+// 3) 5, 6, 4, 3, 0, 2, 1
+// 4) 6, 5, 4, 3, 0, 1, 2
+// 5) 5, 6, 3, 4, 0, 2, 1
+// 6) 5, 6, 3, 4, 1, 2, 0
+// There are other valid topological ordering of the graph too.
+```
+
+Variation:
+Tasks Scheduling (medium)
+Tasks Scheduling Order (medium)
+All Tasks Scheduling Orders (hard)
+Alien Dictionary (hard)
+Reconstructing a Sequence (hard)
+Minimum Height Trees (hard)
+
+
+
+
+## Top K Elements Technique
+
+
+Any problem that asks us to find the top/smallest/frequent K elements among a given set falls under this pattern.
+
+The best data structure that comes to mind to keep track of K elements is Heap. This pattern will make use of the Heap to solve multiple problems dealing with K elements at a time from a set of given elements.
+
+`A Heap is a special Tree-based data structure in which the tree is a complete binary tree.`
+
+`A complete binary tree is a special type of binary tree where all the levels of the tree are filled completely except the lowest level nodes which are filled from as left as possible.`
+
+
+Given an array of N numbers and a positive integer K. The problem is to find K numbers with the most occurrences, i.e., the top K numbers having the maximum frequency. If two numbers have the same frequency then the number with a larger value should be given preference. The numbers should be displayed in decreasing order of their frequencies. It is assumed that the array consists of at least K numbers.
+
+```
+Input: arr[] = {3, 1, 4, 4, 5, 2, 6, 1}, K = 2
+Output: 4 1
+Explanation:
+Frequency of 4 = 2, Frequency of 1 = 2
+These two have the maximum frequency and 4 is larger than 1.
+```
+
+One way to solve this would be to use a Map (which could come to mind first in an interview)
+
+create a Map to store the element-frequency pair. Map is used to perform insertion and updating in constant time. Then sort the element-frequency pair in decreasing order of frequency. This gives the information about each element and the number of times they are present in the array. To get K elements of the array, print the first K elements of the sorted array.
+
+```java
+// Java implementation to find
+// K elements with max occurrence.
+
+import java.util.*;
+public class KFrequentNumbers {
+	static void print_N_mostFrequentNumber(int[] arr, int N,
+										int K)
+	{
+
+		Map<Integer, Integer> mp
+			= new HashMap<Integer, Integer>();
+
+		// Put count of all the
+		// distinct elements in Map
+		// with element as the key &
+		// count as the value.
+		for (int i = 0; i < N; i++) {
+
+			// Get the count for the
+			// element if already present in the
+			// Map or get the default value which is 0.
+			mp.put(arr[i], mp.getOrDefault(arr[i], 0) + 1);
+		}
+
+		// Create a list from elements of HashMap
+		List<Map.Entry<Integer, Integer> > list
+			= new ArrayList<Map.Entry<Integer, Integer> >(
+				mp.entrySet());
+
+		// Sort the list
+		Collections.sort(
+			list,
+			new Comparator<Map.Entry<Integer, Integer> >() {
+				public int compare(
+					Map.Entry<Integer, Integer> o1,
+					Map.Entry<Integer, Integer> o2)
+				{
+					if (o1.getValue() == o2.getValue())
+						return o2.getKey() - o1.getKey();
+					else
+						return o2.getValue()
+							- o1.getValue();
+				}
+			});
+
+		for (int i = 0; i < K; i++)
+			System.out.print(list.get(i).getKey() + " ");
+	}
+
+	// Driver's Code
+	public static void main(String[] args)
+	{
+		int arr[] = { 3, 1, 4, 4, 5, 2, 6, 1 };
+		int N = arr.length;
+		int K = 2;
+
+		// Function call
+		System.out.println(
+			K + " numbers with most occurrences are:");
+		print_N_mostFrequentNumber(arr, N, K);
+	}
+}
+
+```
+
+Output
+```
+2 numbers with most occurrences are:
+4 1 
+```
+
+Time Complexity: O(D log D), where D is the count of distinct elements in the array
+Auxiliary Space: O(D), where D is the count of distinct elements in the array
+
+
+Now Let's try solving this problem with the Max-Head Data Structure
+
+
+Approach: Create a Map to store element-frequency pair. Map is used to perform insertion and updation in constant time. Then use a priority queue to store the element-frequency pair (Max-Heap). The element which has maximum frequency, comes at the root of the Priority Queue. Remove the top or root of Priority Queue K times and print the element.
+
+```java
+// Java implementation to find k
+// elements with max occurrence.
+import java.util.*;
+public class KFrequentNumbers {
+	static void print_N_mostFrequentNumber(int[] arr, int N,
+										int K)
+	{
+		Map<Integer, Integer> mp
+			= new HashMap<Integer, Integer>();
+
+		// Put count of all the
+		// distinct elements in Map
+		// with element as the key &
+		// count as the value.
+		for (int i = 0; i < N; i++) {
+
+			// Get the count for the
+			// element if already
+			// present in the Map or
+			// get the default value
+			// which is 0.
+			mp.put(arr[i], mp.getOrDefault(arr[i], 0) + 1);
+		}
+
+		// Create a Priority Queue
+		// to sort based on the
+		// count or on the key if the
+		// count is same
+		PriorityQueue<Map.Entry<Integer, Integer> > queue
+			= new PriorityQueue<>(
+				(a, b)
+					-> a.getValue().equals(b.getValue())
+						? Integer.compare(b.getKey(),
+											a.getKey())
+						: Integer.compare(b.getValue(),
+											a.getValue()));
+
+		// Insert the data from the map
+		// to the Priority Queue.
+		for (Map.Entry<Integer, Integer> entry :
+			mp.entrySet())
+			queue.offer(entry);
+
+		// Print the top k elements
+		for (int i = 0; i < K; i++) {
+			System.out.print(queue.poll().getKey() + " ");
+		}
+	}
+
+	// Driver's Code
+	public static void main(String[] args)
+	{
+		int arr[] = { 3, 1, 4, 4, 5, 2, 6, 1 };
+		int N = arr.length;
+		int K = 2;
+
+		System.out.println(
+			K + " numbers with most occurrences are:");
+		// Function call
+		print_N_mostFrequentNumber(arr, N, K);
+	}
+}
+
+// This code is contributed by Shubham Kumar Shah
+
+```
+
+
+
+## Min Heaps and Max Heaps Technique
+
+
+A Heap is a special Tree-based data structure in which the tree is a complete binary tree. Since a heap is a complete binary tree, a heap with N nodes has log N height. It is useful to remove the highest or lowest priority element. It is typically represented as an array. There are two types of Heaps in the data structure.
+
+### Min-Heap
+In a Min-Heap the key present at the root node must be less than or equal among the keys present in all of its children. The same property must be recursively true for all sub-trees in that Binary Tree. In a Min-Heap the minimum key element is present at the root. Below is the Binary Tree that satisfies all the property of Min Heap.
+
+![Min Heap](../Media/MinHeap.jpg)
+
+
+### Max Heap
+In a Max-Heap the key present at the root node must be greater than or equal among the keys present in all of its children. The same property must be recursively true for all sub-trees in that Binary Tree. In a Max-Heap the maximum key element is present at the root. Below is the Binary Tree that satisfies all the property of Max Heap.
+
+![Max Heap](../Media/MaxHeap.jpg)
+
+
+In many problems, where we are given a set of elements such that we can divide them into two parts. To solve the problem, we are interested in knowing the smallest element in one part and the biggest element in the other part. This pattern is an efficient approach to solve such problems.
+
+This pattern uses two Heaps to solve these problems; A Min Heap to find the smallest element and a Max Heap to find the biggest element.
+
+
+## Find the Median of a Number Stream (medium)
+https://leetcode.com/problems/find-median-from-data-stream/
+> Design a class to calculate the median of a number stream. The class should have the following two methods:
+> 1. `insertNum(int num)`: stores the number in the class
+> 2. `findMedian()`: returns the median of all numbers inserted in the class
+> If the count of numbers inserted in the class is even, the median will be the average of the middle two numbers.
+
+As we know, the median is the middle value in an ordered integer list. So a brute force solution could be to maintain a sorted list of all numbers inserted in the class so that we can efficiently return the median whenever required. Inserting a number in a sorted list will take `O(N)` time if there are `N` numbers in the list. This insertion will be similar to the <b>Insertion sort</b>. Can we do better than this? Can we utilize the fact that we don’t need the fully sorted list - we are only interested in finding the middle element?
+
+Assume ‘x’ is the median of a list. This means that half of the numbers in the list will be smaller than (or equal to) ‘x’ and half will be greater than (or equal to) ‘x’. This leads us to an approach where we can divide the list into two halves: one half to store all the smaller numbers (let’s call it `smallNumList`) and one half to store the larger numbers (let’s call it `largNumList`). The median of all the numbers will either be the largest number in the `smallNumList` or the smallest number in the `largNumList`. If the total number of elements is even, the median will be the average of these two numbers.
+
+The best data structure that comes to mind to find the smallest or largest number among a list of numbers is a <b>Heap</b>. Let’s see how we can use a heap to find a better algorithm.
+
+1. We can store the first half of numbers (i.e., `smallNumList`) in a <b>Max Heap</b>. We should use a Max Heap as we are interested in knowing the largest number in the first half.
+2. We can store the second half of numbers (i.e., `largeNumList`) in a <b>Min Heap</b>, as we are interested in knowing the smallest number in the second half.
+3. Inserting a number in a heap will take `O(logN)`, which is better than the brute force approach.
+4. At any time, the median of the current list of numbers can be calculated from the top element of the two heaps.
+
+Let’s take the Example-1 mentioned above to go through each step of our algorithm:
+1. `insertNum(3)`: We can insert a number in the <b>Max Heap</b> (i.e. first half) if the number is smaller than the top (largest) number of the heap. After every insertion, we will balance the number of elements in both heaps, so that they have an equal number of elements. If the count of numbers is odd, let’s decide to have more numbers in max-heap than the Min Heap.
+2. `insertNum(1)`: As ‘1’ is smaller than ‘3’, let’s insert it into the <b>Max Heap</b>.
+
+Now, we have two elements in the <b>Max Heap</b> and no elements in <b>Min Heap</b>. Let’s take the largest element from the Max Heap and insert it into the <b>Min Heap</b>, to balance the number of elements in both heaps.
+
+3. `findMedian()`: As we have an even number of elements, the median will be the average of the top element of both the heaps ➡️ `(1+3)/2 = 2.0(1+3)/2=2.0`
+4. `insertNum(5)`: As ‘5’ is greater than the top element of the <b>Max Heap</b>, we can insert it into the <b>Min Heap</b>. After the insertion, the total count of elements will be odd. As we had decided to have more numbers in the <b>Max Heap</b> than the <b>Min Heap</b>, we can take the top (smallest) number from the <b>Min Heap</b> and insert it into the <b>Max Heap</b>.
+5. `findMedian()`: Since we have an odd number of elements, the median will be the top element of <b>Max Heap</b> ➡️ `3`. An odd number of elements also means that the <b>Max Heap</b> will have one extra element than the <b>Min Heap</b>.
+6. `insertNum(4)`: Insert ‘4’ into <b>Min Heap</b>.
+7. `findMedian()`: As we have an even number of elements, the median will be the average of the top element of both the heaps ➡️ `(3+4)/2 = 3.5(3+4)/2=3.5`
+
+
+
+Other variations to this problem exist:
+Sliding Window Median (hard)
+Maximize Capital (hard)
+Next Interval (hard)
 
 
 
@@ -531,4 +982,22 @@ https://medium.com/techie-delight/top-problems-on-sliding-window-technique-8e63f
 https://medium.com/@luisfernandosalasg/coding-pattern-cyclic-sort-96511b0f60ac
 
 
-https://github.com/Chanda-Abdul/Several-Coding-Patterns-for-Solving-Data-Structures-and-Algorithms-Problems-during-Interviews/blob/main/%E2%9C%85%20%20Pattern%2005%3A%20Cyclic%20Sort.md
+[Cyclic sort](https://github.com/Chanda-Abdul/Several-Coding-Patterns-for-Solving-Data-Structures-and-Algorithms-Problems-during-Interviews/blob/main/%E2%9C%85%20%20Pattern%2005%3A%20Cyclic%20Sort.md)
+
+[Subsets](https://github.com/Chanda-Abdul/Several-Coding-Patterns-for-Solving-Data-Structures-and-Algorithms-Problems-during-Interviews/blob/main/%E2%9C%85%20%20Pattern%2010%3A%20Subsets.md)
+
+[Topological sort](https://github.com/Chanda-Abdul/Several-Coding-Patterns-for-Solving-Data-Structures-and-Algorithms-Problems-during-Interviews/blob/main/%E2%9C%85%20Pattern%2016%3A%20%F0%9F%94%8E%20Topological%20Sort%20(Graph).md)
+
+
+
+https://www.geeksforgeeks.org/find-k-numbers-occurrences-given-array/
+
+https://www.geeksforgeeks.org/difference-between-min-heap-and-max-heap/
+
+
+
+
+
+
+
+
