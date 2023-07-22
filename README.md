@@ -1,5 +1,8 @@
 # JavaJourney
-This repository will be used to document my Java learning journey.
+This repository will be used to document my Java learning journey and to group different topics in one place.
+
+**N.B**: All chapters have references to their websites where more details can be found 
+
 # Theory
 
 ## Table Of Contents
@@ -23,6 +26,7 @@ This repository will be used to document my Java learning journey.
 9. [Inheritance & Polymorphism](Notes/OOP2.md)
 10. [Abstract Classes and Interfaces](Notes/OOP3.md)
 11. [Further OOP Principles](Notes/OOP4.md)
+    1. [SOLID principles](Notes/OOP4.md/#solid)
 12. [Algorithms](Notes/Algo1.md)
     1. [Techniques](Notes/Algo2.md)
 # Exercises
@@ -33,3 +37,5 @@ This repository will be used to document my Java learning journey.
 2. [Data Structures](Exercises/DataStructures/)
 3. [OOP1](Exercises/OOP1/)
 4. [OOP2](Exercises/OOP2/)
+5. [Algo1](Exercises/Algo1/)
+
