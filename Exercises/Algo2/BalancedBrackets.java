@@ -64,6 +64,7 @@ class Result {
     public static void main(String[] argsv){
         String test = "{{}(";
         System.out.println(isBalanced(test));
+        
     }
 
 }
