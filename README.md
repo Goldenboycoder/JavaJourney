@@ -38,4 +38,5 @@ This repository will be used to document my Java learning journey and to group d
 3. [OOP1](Exercises/OOP1/)
 4. [OOP2](Exercises/OOP2/)
 5. [Algo1](Exercises/Algo1/)
+6. [Algo2](Exercises/Algo2/)
 
